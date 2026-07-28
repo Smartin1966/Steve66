@@ -55,15 +55,50 @@ publishes:
 
 ## Setup
 
+macOS/Linux (bash/zsh):
+
 ```bash
 cd dobot_mydevices_bridge
 python3 -m venv .venv
-source .venv/bin/activate        # on Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
 
 cp config.example.yaml config.yaml
 # edit config.yaml: set dobot.ip, and fill in mydevices.backends.mqtt
 # and/or mydevices.backends.rest with your real credentials
+```
+
+Windows (PowerShell):
+
+```powershell
+cd dobot_mydevices_bridge
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+
+copy config.example.yaml config.yaml
+# edit config.yaml: set dobot.ip, and fill in mydevices.backends.mqtt
+# and/or mydevices.backends.rest with your real credentials
+```
+
+If `Activate.ps1` fails with a script-execution error, PowerShell's default
+policy is blocking unsigned scripts. Run this once in that window, then
+retry activation:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.venv\Scripts\Activate.ps1
+```
+
+Windows (cmd.exe):
+
+```cmd
+cd dobot_mydevices_bridge
+python -m venv .venv
+.venv\Scripts\activate.bat
+pip install -r requirements.txt
+
+copy config.example.yaml config.yaml
 ```
 
 ### Find your MG400's IP
