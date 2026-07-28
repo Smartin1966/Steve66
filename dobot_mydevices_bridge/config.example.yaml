@@ -1,0 +1,55 @@
+# Copy this file to config.yaml and fill in your values.
+# config.yaml is gitignored so credentials never get committed.
+
+dobot:
+  ip: "192.168.1.6"          # MG400 controller IP address
+  dashboard_port: 29999      # Dobot TCP dashboard/control port (fixed on MG400)
+  connect_timeout_seconds: 5
+  read_timeout_seconds: 5
+  poll_interval_seconds: 2   # how often to read telemetry from the arm
+  reconnect_delay_seconds: 5
+
+mydevices:
+  # Which backend(s) to publish telemetry to. Enable one or both.
+  backends:
+    mqtt:
+      enabled: true
+      # myDevices/Cayenne-compatible MQTT broker. Replace with the broker
+      # host/credentials issued for your mydevices.com account or gateway.
+      broker_host: "mqtt.mydevices.com"
+      broker_port: 8883
+      use_tls: true
+      username: "YOUR_MQTT_USERNAME"
+      password: "YOUR_MQTT_PASSWORD"
+      client_id: "dobot-mg400-01"
+      # Cayenne MQTT topic scheme: {topic_prefix}/{username}/things/{client_id}/data/{channel}
+      topic_prefix: "v1"
+      keepalive_seconds: 60
+      # Maps each telemetry point to a numeric Cayenne channel ID.
+      channel_map:
+        connected: 0
+        robot_mode: 1
+        pose_x: 2
+        pose_y: 3
+        pose_z: 4
+        pose_r: 5
+        joint_j1: 6
+        joint_j2: 7
+        joint_j3: 8
+        joint_j4: 9
+        has_error: 10
+
+    rest:
+      enabled: false
+      # Generic HTTPS ingest endpoint for accounts using myDevices' REST
+      # ingestion API instead of (or in addition to) MQTT.
+      url: "https://mydevices.com/api/v1/ingest"
+      api_key: "YOUR_API_KEY"
+      device_id: "dobot-mg400-01"
+      timeout_seconds: 10
+
+logging:
+  level: "INFO"               # DEBUG, INFO, WARNING, ERROR
+  file: "dobot_bridge.log"
+  max_bytes: 1048576
+  backup_count: 3

@@ -1,0 +1,24 @@
+# Example systemd unit for running the bridge as a service on a Linux PC.
+#
+# Install:
+#   sudo cp deploy/dobot-mydevices-bridge.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now dobot-mydevices-bridge
+#
+# Edit the paths below to match where you cloned this repo and your venv.
+
+[Unit]
+Description=Dobot MG400 to myDevices telemetry bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/dobot_mydevices_bridge
+ExecStart=/opt/dobot_mydevices_bridge/.venv/bin/python src/main.py --config config.yaml
+Restart=on-failure
+RestartSec=5
+User=dobot
+
+[Install]
+WantedBy=multi-user.target
