@@ -66,7 +66,9 @@ def build_publishers(mydevices_config: dict, dry_run: bool) -> list[TelemetryPub
             RestPublisher(
                 url=rest_config["url"],
                 api_key=rest_config["api_key"],
-                device_id=rest_config["device_id"],
+                eui=rest_config["eui"],
+                format=rest_config.get("format", "json"),
+                ignore_codec=rest_config.get("ignore_codec", True),
                 timeout_seconds=float(rest_config.get("timeout_seconds", 10.0)),
             )
         )

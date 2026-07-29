@@ -1,10 +1,16 @@
-"""Generic HTTPS REST publisher for myDevices ingestion endpoints.
+"""HTTP webhook publisher for myDevices ingestion.
 
-Some myDevices accounts/gateways ingest telemetry via a REST API instead of
-MQTT. This publisher POSTs a JSON body of ``{"device_id": ..., "data": {...}}``
-to a configurable URL with an API key header, and is deliberately generic so
-the URL/auth/body shape can be adapted to whatever endpoint the account
-actually provides.
+Implements the myDevices HTTP device connector contract
+(https://docs.mydevices.com/docs/device/http): a POST to the account's
+ingress URL with the API key as a query parameter and a JSON body of the
+form::
+
+    {
+      "eui": "<device EUI myDevices assigned>",
+      "format": "json",
+      "ignore_codec": true,
+      "data": { ...telemetry fields... }
+    }
 """
 
 from __future__ import annotations
@@ -25,20 +31,19 @@ class RestPublisher(TelemetryPublisher):
         self,
         url: str,
         api_key: str,
-        device_id: str,
+        eui: str,
+        format: str = "json",  # noqa: A002 - matches myDevices field name
+        ignore_codec: bool = True,
         timeout_seconds: float = 10.0,
     ) -> None:
         self.url = url
         self.api_key = api_key
-        self.device_id = device_id
+        self.eui = eui
+        self.format = format
+        self.ignore_codec = ignore_codec
         self.timeout_seconds = timeout_seconds
         self._session = requests.Session()
-        self._session.headers.update(
-            {
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            }
-        )
+        self._session.headers.update({"Content-Type": "application/json"})
 
     def connect(self) -> None:
         # Stateless HTTP client; nothing to establish up front.
@@ -48,8 +53,18 @@ class RestPublisher(TelemetryPublisher):
         self._session.close()
 
     def publish(self, telemetry: dict) -> None:
-        body = {"device_id": self.device_id, "data": telemetry}
-        response = self._session.post(self.url, json=body, timeout=self.timeout_seconds)
+        body = {
+            "eui": self.eui,
+            "format": self.format,
+            "ignore_codec": self.ignore_codec,
+            "data": telemetry,
+        }
+        response = self._session.post(
+            self.url,
+            params={"apiKey": self.api_key},
+            json=body,
+            timeout=self.timeout_seconds,
+        )
         if response.status_code >= 300:
             raise ConnectionError(
                 f"myDevices REST publish failed: {response.status_code} {response.text[:200]}"

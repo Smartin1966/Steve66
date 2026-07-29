@@ -37,8 +37,12 @@ publishes:
     `{topic_prefix}/{username}/things/{client_id}/data/{channel}` on a
     Cayenne-style MQTT broker (channel numbers you map in config to match
     your myDevices dashboard widgets).
-  - `rest`: POSTs a JSON `{"device_id": ..., "data": {...}}` body to a
-    configurable HTTPS endpoint with a bearer API key.
+  - `rest`: implements myDevices' documented HTTP device connector
+    (https://docs.mydevices.com/docs/device/http) — POSTs
+    `{"eui": ..., "format": "json", "ignore_codec": true, "data": {...}}`
+    to your account's ingress URL, with the API key sent as an `?apiKey=`
+    query parameter. Use this if myDevices set up an HTTP connector for you
+    and gave you an ingress URL/API key/EUI.
   - Both can be enabled at once.
 
   **You will need to get the actual broker host/credentials or REST

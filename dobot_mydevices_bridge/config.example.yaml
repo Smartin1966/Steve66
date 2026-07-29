@@ -41,11 +41,14 @@ mydevices:
 
     rest:
       enabled: false
-      # Generic HTTPS ingest endpoint for accounts using myDevices' REST
-      # ingestion API instead of (or in addition to) MQTT.
-      url: "https://mydevices.com/api/v1/ingest"
-      api_key: "YOUR_API_KEY"
-      device_id: "dobot-mg400-01"
+      # myDevices HTTP device connector (https://docs.mydevices.com/docs/device/http).
+      # url/api_key/eui are all issued per-device by myDevices when they set up
+      # the HTTP connector for you -- copy them from their webhook/curl example.
+      url: "https://hub.m2c.io/v3/ingress/YOUR_INGRESS_ID"
+      api_key: "YOUR_API_KEY"          # sent as the ?apiKey= query param
+      eui: "YOUR_DEVICE_EUI"           # device identifier myDevices assigned
+      format: "json"
+      ignore_codec: true
       timeout_seconds: 10
 
 logging:
