@@ -8,7 +8,6 @@ form::
     {
       "eui": "<device EUI myDevices assigned>",
       "format": "json",
-      "ignore_codec": true,
       "data": { ...telemetry fields... }
     }
 """
@@ -33,14 +32,12 @@ class RestPublisher(TelemetryPublisher):
         api_key: str,
         eui: str,
         format: str = "json",  # noqa: A002 - matches myDevices field name
-        ignore_codec: bool = True,
         timeout_seconds: float = 10.0,
     ) -> None:
         self.url = url
         self.api_key = api_key
         self.eui = eui
         self.format = format
-        self.ignore_codec = ignore_codec
         self.timeout_seconds = timeout_seconds
         self._session = requests.Session()
         self._session.headers.update({"Content-Type": "application/json"})
@@ -56,7 +53,6 @@ class RestPublisher(TelemetryPublisher):
         body = {
             "eui": self.eui,
             "format": self.format,
-            "ignore_codec": self.ignore_codec,
             "data": telemetry,
         }
         response = self._session.post(

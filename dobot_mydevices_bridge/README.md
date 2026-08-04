@@ -39,7 +39,7 @@ publishes:
     your myDevices dashboard widgets).
   - `rest`: implements myDevices' documented HTTP device connector
     (https://docs.mydevices.com/docs/device/http) — POSTs
-    `{"eui": ..., "format": "json", "ignore_codec": true, "data": {...}}`
+    `{"eui": ..., "format": "json", "data": {...}}`
     to your account's ingress URL, with the API key sent as an `?apiKey=`
     query parameter. Use this if myDevices set up an HTTP connector for you
     and gave you an ingress URL/API key/EUI.

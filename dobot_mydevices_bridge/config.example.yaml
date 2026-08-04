@@ -48,7 +48,6 @@ mydevices:
       api_key: "YOUR_API_KEY"          # sent as the ?apiKey= query param
       eui: "YOUR_DEVICE_EUI"           # device identifier myDevices assigned
       format: "json"
-      ignore_codec: true
       timeout_seconds: 10
 
 logging:
