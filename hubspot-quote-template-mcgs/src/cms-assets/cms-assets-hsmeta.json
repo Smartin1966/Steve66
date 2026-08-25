@@ -1,0 +1,8 @@
+{
+  "uid": "mcgs-quote-module-project",
+  "type": "cms-assets",
+  "config": {
+    "themePath": "my-react-assets",
+    "secretNames": []
+  }
+}
