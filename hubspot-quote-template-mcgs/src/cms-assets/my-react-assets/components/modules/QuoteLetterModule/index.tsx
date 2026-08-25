@@ -9,7 +9,7 @@ import { COLORS, FONT_HEADING, FONT_BODY } from '../../theme';
 
 interface FieldValues {
   eyebrow: string;
-  body: string;
+  letterBody: string;
   signatureImage?: { src?: string; alt?: string };
   senderJobTitle?: string;
   websiteLabel?: string;
@@ -72,7 +72,7 @@ export function Component({ fieldValues, hublData }: Props) {
         Dear {contactFirstName || 'valued customer'},
       </p>
 
-      <RichTextFieldWrapper tag="div" fieldValue={fieldValues.body} />
+      <RichTextFieldWrapper tag="div" fieldValue={fieldValues.letterBody} />
 
       <p style={{ marginTop: 'calc(var(--spacing-unit) * 3)' }}>Sincerely,</p>
 
@@ -132,7 +132,7 @@ export const fields = (
   <ModuleFields>
     <TextField name="eyebrow" label="Section heading" default="Overview" />
     <RichTextField
-      name="body"
+      name="letterBody"
       label="Letter body"
       default={`<p>Thank you for the opportunity to present this proposal for implementing the Ultimo Enterprise Asset Management (EAM) system. At MCGlobal Solutions, we specialize in delivering cloud-based solutions that enable maintenance teams to seamlessly execute complex processes with efficiency and confidence.</p>
 <p>Our proposed EAM platform offers a robust suite of capabilities, including long-term asset management, advanced dashboard reporting, Health, Safety &amp; Environment (HSE) features, and Permit to Work functionality. This integrated and scalable system is designed to streamline operations across your organization while providing an intuitive and user-friendly experience.</p>

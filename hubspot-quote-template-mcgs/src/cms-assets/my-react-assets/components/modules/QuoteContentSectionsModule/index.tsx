@@ -9,7 +9,7 @@ import { COLORS, FONT_HEADING, FONT_BODY } from '../../theme';
 
 interface SectionItem {
   heading: string;
-  body: string;
+  description: string;
 }
 
 interface FieldValues {
@@ -81,7 +81,7 @@ export function Component({ fieldValues, hublData }: Props) {
             >
               {item.heading}
             </h3>
-            <RichTextFieldWrapper tag="div" fieldValue={item.body} />
+            <RichTextFieldWrapper tag="div" fieldValue={item.description} />
           </div>
         ))}
       </div>
@@ -105,28 +105,28 @@ export const fields = (
       default={[
         {
           heading: 'Expert Review',
-          body: '<p>Our consultants will conduct a thorough assessment of your current asset and maintenance management practices. This review identifies specific business requirements and areas for improvement, ensuring the solution is precisely aligned with your operational needs.</p>',
+          description: '<p>Our consultants will conduct a thorough assessment of your current asset and maintenance management practices. This review identifies specific business requirements and areas for improvement, ensuring the solution is precisely aligned with your operational needs.</p>',
         },
         {
           heading: 'Strategic Planning',
-          body: '<p>We will design a customized implementation plan tailored to your unique environment. This may include reconfiguring, streamlining, or enhancing current processes to ensure maximum system efficiency and business value.</p>',
+          description: '<p>We will design a customized implementation plan tailored to your unique environment. This may include reconfiguring, streamlining, or enhancing current processes to ensure maximum system efficiency and business value.</p>',
         },
         {
           heading: 'Professional Implementation',
-          body: "<p>Our team will manage a systematic, phased rollout of the solution, customized to your organization's priorities and pace. We follow a standardized methodology to ensure consistency, reliability, and successful adoption.</p>",
+          description: "<p>Our team will manage a systematic, phased rollout of the solution, customized to your organization's priorities and pace. We follow a standardized methodology to ensure consistency, reliability, and successful adoption.</p>",
         },
         {
           heading: 'Tailored Training',
-          body: '<p>We provide role-specific training to empower your staff with the knowledge and skills needed to confidently use and maintain the system. These customized sessions, supported by user-friendly materials, will maximize your return on investment and ensure long-term success.</p>',
+          description: '<p>We provide role-specific training to empower your staff with the knowledge and skills needed to confidently use and maintain the system. These customized sessions, supported by user-friendly materials, will maximize your return on investment and ensure long-term success.</p>',
         },
         {
           heading: 'Personalized Support Services',
-          body: '<p>An MCGlobal Solutions support representative will collaborate with your system administrator and key users to resolve issues efficiently and recommend best practices. Our ongoing technical support ensures your system remains optimized in line with evolving technologies and industry standards.</p>',
+          description: '<p>An MCGlobal Solutions support representative will collaborate with your system administrator and key users to resolve issues efficiently and recommend best practices. Our ongoing technical support ensures your system remains optimized in line with evolving technologies and industry standards.</p>',
         },
       ]}
     >
       <TextField name="heading" label="Heading" default="" />
-      <RichTextField name="body" label="Body" default="" />
+      <RichTextField name="description" label="Body" default="" />
     </RepeatedFieldGroup>
   </ModuleFields>
 );

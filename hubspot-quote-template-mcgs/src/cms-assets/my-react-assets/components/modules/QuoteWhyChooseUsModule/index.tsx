@@ -8,7 +8,7 @@ import { COLORS, FONT_HEADING, FONT_BODY, splitLines } from '../../theme';
 
 interface FieldValues {
   heading: string;
-  body: string;
+  intro: string;
   clientsHeading: string;
   clients: string;
 }
@@ -40,7 +40,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         {fieldValues.heading}
       </h2>
 
-      <RichTextFieldWrapper tag="div" fieldValue={fieldValues.body} />
+      <RichTextFieldWrapper tag="div" fieldValue={fieldValues.intro} />
 
       {clients.length ? (
         <div style={{ marginTop: 'calc(var(--spacing-unit) * 3)' }}>
@@ -91,7 +91,7 @@ export const fields = (
       default="Why Choose MCGlobal Solutions?"
     />
     <RichTextField
-      name="body"
+      name="intro"
       label="Body"
       default={`<p>At MCGlobal Solutions, we specialize in delivering straightforward, effective, and user-focused solutions. Our goal is to make asset management intuitive&mdash;empowering users to efficiently oversee every aspect of their operations, enhance performance, and drive productivity.</p>
 <p>Our strength lies in the ability to track, analyze, and manage critical data&mdash;providing operational benefits to organizations across a wide range of industries and scales.</p>
