@@ -5,7 +5,7 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY } from '../../theme';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
 
 interface FieldValues {
   eyebrow: string;
@@ -49,6 +49,7 @@ export function Component({ fieldValues, hublData }: Props) {
   return (
     <div
       style={{
+        ...A4_PAGE,
         fontFamily: FONT_BODY,
         color: COLORS.body,
         backgroundColor: COLORS.paper,

@@ -4,7 +4,7 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import type { QuoteTemplateContext } from '@hubspot/quote-dev-sdk';
-import { COLORS, FONT_HEADING, FONT_BODY, formatCrmDate } from '../../theme';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate } from '../../theme';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
@@ -47,6 +47,9 @@ export function Component({ fieldValues, hublData }: Props) {
   return (
     <div
       style={{
+        ...A4_PAGE,
+        display: 'flex',
+        flexDirection: 'column',
         fontFamily: FONT_BODY,
         color: COLORS.body,
         backgroundColor: COLORS.paper,
@@ -180,7 +183,7 @@ export function Component({ fieldValues, hublData }: Props) {
         </div>
       </div>
 
-      <div style={{ height: 6, backgroundColor: COLORS.orange }} />
+      <div style={{ height: 6, backgroundColor: COLORS.orange, marginTop: 'auto' }} />
     </div>
   );
 }

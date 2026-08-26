@@ -6,7 +6,7 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, splitLines } from '../../theme';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, splitLines } from '../../theme';
 
 interface CaseStudy {
   logo?: { src?: string; alt?: string };
@@ -45,9 +45,12 @@ function CaseStudyCard({ study, isFirst }: { study: CaseStudy; isFirst: boolean 
   return (
     <div
       style={{
+        ...A4_PAGE,
+        backgroundColor: COLORS.paper,
         padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)',
         borderTop: isFirst ? 'none' : `1px solid ${COLORS.border}`,
         pageBreakBefore: isFirst ? 'auto' : 'always',
+        breakBefore: isFirst ? 'auto' : 'page',
       }}
     >
       <div

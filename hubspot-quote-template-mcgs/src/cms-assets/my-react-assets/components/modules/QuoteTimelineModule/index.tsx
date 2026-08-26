@@ -5,7 +5,7 @@ import {
   RepeatedFieldGroup,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY } from '../../theme';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
 
 interface TimelineRow {
   phase: string;
@@ -25,6 +25,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
   return (
     <div
       style={{
+        ...A4_PAGE,
         fontFamily: FONT_BODY,
         color: COLORS.body,
         backgroundColor: COLORS.paper,

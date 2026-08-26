@@ -18,6 +18,27 @@ export const FONT_HEADING =
 export const FONT_BODY =
   "'Inter', 'Segoe UI', Helvetica, Arial, sans-serif";
 
+// Sizes every top-level module section as one A4 sheet (210mm x 297mm) and
+// forces a page break after it, so when a quote renders to PDF each
+// module/case-study lands on its own clean page instead of running on or
+// splitting mid-content. minHeight (not height) lets a section that needs
+// more room grow past one page rather than clipping content.
+export const A4_PAGE: {
+  width: string;
+  minHeight: string;
+  boxSizing: 'border-box';
+  margin: string;
+  pageBreakAfter: 'always';
+  breakAfter: 'page';
+} = {
+  width: '210mm',
+  minHeight: '297mm',
+  boxSizing: 'border-box',
+  margin: '0 auto',
+  pageBreakAfter: 'always',
+  breakAfter: 'page',
+};
+
 export function formatCrmDate(value: unknown): string | null {
   if (value === null || value === undefined || value === '') return null;
   const num = Number(value);

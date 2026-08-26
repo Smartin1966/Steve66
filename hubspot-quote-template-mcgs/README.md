@@ -26,6 +26,29 @@ The **pricing table and e-signature stay on HubSpot's native modules**
 (Line Items, Signature) so they keep syncing with the deal/products — those
 you just drag in from the standard module panel, no coding needed.
 
+## A4 page sizing
+
+Every module's root element is sized as one A4 sheet (`210mm` wide,
+`297mm` minimum height, defined once as `A4_PAGE` in `components/theme.ts`)
+with a forced page break after it. `QuoteCaseStudiesModule` applies this
+per case-study card instead of to the module as a whole, since one module
+instance can render multiple case studies. Practically this means:
+
+- Each module (and each case study) starts on its own clean page when the
+  quote is exported/rendered to PDF, instead of running on from the
+  previous section or splitting mid-content.
+- A section with little content still fills a full A4 page height; a
+  section with more content than fits on one page grows past `297mm`
+  rather than clipping (better to have a section run slightly long than
+  silently lose text).
+- On screen (in the template/quote editor, not the PDF), this renders as
+  a centered ~210mm-wide column, matching the fixed-page-width look of
+  the original PDF proposal.
+
+If you change the padding/margins in a module, keep it inside the printable
+area of an A4 page (roughly 190mm usable width after standard margins) so
+nothing gets pushed off the edge when printed.
+
 ## What's included
 
 ```
