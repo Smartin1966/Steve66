@@ -14,6 +14,7 @@ import {
   richTextPersonalizationFeatures,
   splitLines,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface FieldValues {
   heading: string;
@@ -21,6 +22,7 @@ interface FieldValues {
   clientsHeading: string;
   clients: string;
   bannerImage?: { src?: string; alt?: string };
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -122,6 +124,8 @@ export function Component({
           </div>
         </div>
       ) : null}
+
+      <ExtraBlocks blocks={fieldValues.extraBlocks} />
     </div>
   );
 }
@@ -179,6 +183,7 @@ export const fields = (
         'Slater+Gordon Lawyers',
       ].join('\n')}
     />
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 

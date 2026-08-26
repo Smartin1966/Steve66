@@ -71,6 +71,26 @@ no code required. Every module also has at least one **ImageField** (logo,
 hero banner, screenshots, case-study logos, or a decorative banner) so you
 can swap in your own pictures the same way.
 
+### Adding more than the fixed fields: "Additional content blocks"
+
+Every module (and, inside `QuoteCaseStudiesModule`, every individual case
+study) ends with an **Additional content blocks** repeater — click "Add"
+in the sidebar to append as many extra blocks as you need, in any
+combination, without touching code:
+
+- an image (with an optional caption),
+- a heading,
+- rich text (with the same personalize/lists/links/colors toolbar as
+  every other rich text field),
+
+and leave any part of a block blank to skip it — an image-only block, a
+text-only block, or both together are all fine. Blocks render in the order
+you add them, after the module's built-in content, and each one still
+respects the module's A4 page (a section with a lot of extra blocks just
+grows taller rather than clipping). This is the escape hatch for anything
+the fixed fields above don't cover — you are not limited to what a module
+shipped with.
+
 Two ways to personalize copy per-quote:
 
 1. **Rich text fields** (letter body, section bodies, feature intro, case

@@ -14,6 +14,7 @@ import {
   personalize,
   richTextPersonalizationFeatures,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface SectionItem {
   heading: string;
@@ -25,6 +26,7 @@ interface FieldValues {
   subtitle?: string;
   bannerImage?: { src?: string; alt?: string };
   items: SectionItem[];
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -126,6 +128,8 @@ export function Component({ fieldValues, hublData }: Props) {
           }}
         />
       ) : null}
+
+      <ExtraBlocks blocks={fieldValues.extraBlocks} />
     </div>
   );
 }
@@ -179,6 +183,7 @@ export const fields = (
         enabledFeatures={[...richTextPersonalizationFeatures]}
       />
     </RepeatedFieldGroup>
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 

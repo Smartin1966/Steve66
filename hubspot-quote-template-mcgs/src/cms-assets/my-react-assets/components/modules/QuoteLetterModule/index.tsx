@@ -12,6 +12,7 @@ import {
   A4_PAGE,
   richTextPersonalizationFeatures,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface FieldValues {
   eyebrow: string;
@@ -20,6 +21,7 @@ interface FieldValues {
   senderJobTitle?: string;
   websiteLabel?: string;
   footerLabel?: string;
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -118,6 +120,8 @@ export function Component({ fieldValues, hublData }: Props) {
         </div>
       </div>
 
+      <ExtraBlocks blocks={fieldValues.extraBlocks} />
+
       <div
         style={{
           marginTop: 'calc(var(--spacing-unit) * 4)',
@@ -168,6 +172,7 @@ export const fields = (
       label="Footer label"
       default="MC Global Solutions"
     />
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 

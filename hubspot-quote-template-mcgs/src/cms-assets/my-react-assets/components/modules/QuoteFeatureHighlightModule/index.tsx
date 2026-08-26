@@ -14,6 +14,7 @@ import {
   richTextPersonalizationFeatures,
   splitLines,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface ImageItem {
   image?: { src?: string; alt?: string };
@@ -25,6 +26,7 @@ interface FieldValues {
   intro: string;
   bullets: string;
   images: ImageItem[];
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -126,6 +128,8 @@ export function Component({ fieldValues }: Props) {
           </li>
         ))}
       </ul>
+
+      <ExtraBlocks blocks={fieldValues.extraBlocks} />
     </div>
   );
 }
@@ -155,10 +159,11 @@ export const fields = (
         'Increase productivity from anywhere, anytime.',
       ].join('\n')}
     />
-    <RepeatedFieldGroup name="images" label="Screenshots" occurrence={{ min: 0, max: 4 }}>
+    <RepeatedFieldGroup name="images" label="Screenshots" occurrence={{ min: 0, max: 12 }}>
       <ImageField name="image" label="Image" />
       <TextField name="caption" label="Caption" default="" />
     </RepeatedFieldGroup>
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 

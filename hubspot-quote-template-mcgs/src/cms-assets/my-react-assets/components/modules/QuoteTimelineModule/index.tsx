@@ -14,6 +14,7 @@ import {
   personalize,
   richTextPersonalizationFeatures,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface TimelineRow {
   phase: string;
@@ -26,6 +27,7 @@ interface FieldValues {
   note?: string;
   bannerImage?: { src?: string; alt?: string };
   rows: TimelineRow[];
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -135,6 +137,8 @@ export function Component({
           </div>
         ))}
       </div>
+
+      <ExtraBlocks blocks={fieldValues.extraBlocks} />
     </div>
   );
 }
@@ -173,6 +177,7 @@ export const fields = (
       <TextField name="phase" label="Phase" default="" />
       <TextField name="week" label="Week" default="" />
     </RepeatedFieldGroup>
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 

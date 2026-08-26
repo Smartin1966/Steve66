@@ -14,6 +14,7 @@ import {
   richTextPersonalizationFeatures,
   splitLines,
 } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface CaseStudy {
   logo?: { src?: string; alt?: string };
@@ -28,6 +29,7 @@ interface CaseStudy {
   solutionPoints: string;
   resultsLabel: string;
   resultsPoints: string;
+  extraBlocks?: ExtraBlock[];
 }
 
 interface FieldValues {
@@ -154,6 +156,8 @@ function CaseStudyCard({ study, isFirst }: { study: CaseStudy; isFirst: boolean 
         {study.resultsLabel}
       </h4>
       <BulletList items={splitLines(study.resultsPoints)} />
+
+      <ExtraBlocks blocks={study.extraBlocks} />
     </div>
   );
 }
@@ -276,6 +280,7 @@ export const fields = (
       <TextField name="solutionPoints" label="Solution points" allowNewLine default="" />
       <TextField name="resultsLabel" label="Results label" default="The Results" />
       <TextField name="resultsPoints" label="Results points" allowNewLine default="" />
+      <ExtraContentBlocksField label="Additional content blocks for this case study" />
     </RepeatedFieldGroup>
   </ModuleFields>
 );

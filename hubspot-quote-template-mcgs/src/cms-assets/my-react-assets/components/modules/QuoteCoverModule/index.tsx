@@ -5,12 +5,14 @@ import {
 } from '@hubspot/cms-components/fields';
 import type { QuoteTemplateContext } from '@hubspot/quote-dev-sdk';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate, personalize } from '../../theme';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
   heroImage?: { src?: string; alt?: string };
   eyebrow: string;
   title: string;
+  extraBlocks?: ExtraBlock[];
 }
 
 interface HublData {
@@ -185,6 +187,8 @@ export function Component({ fieldValues, hublData }: Props) {
             <div style={{ fontSize: 15 }}>{senderName}</div>
           </div>
         </div>
+
+        <ExtraBlocks blocks={fieldValues.extraBlocks} />
       </div>
 
       <div style={{ height: 6, backgroundColor: COLORS.orange, marginTop: 'auto' }} />
@@ -212,6 +216,7 @@ export const fields = (
       helpText="Personalize with {{company}} or {{sender_name}}."
       default="Enterprise Asset Management System Proposal"
     />
+    <ExtraContentBlocksField />
   </ModuleFields>
 );
 
