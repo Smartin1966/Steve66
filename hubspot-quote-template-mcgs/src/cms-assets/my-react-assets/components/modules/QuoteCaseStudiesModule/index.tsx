@@ -6,7 +6,14 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, splitLines } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  richTextPersonalizationFeatures,
+  splitLines,
+} from '../../theme';
 
 interface CaseStudy {
   logo?: { src?: string; alt?: string };
@@ -244,13 +251,28 @@ export const fields = (
     >
       <ImageField name="logo" label="Client logo" />
       <TextField name="companyName" label="Company name" default="" />
-      <RichTextField name="intro" label="Intro paragraph" default="" />
-      <RichTextField name="quoteText" label="Testimonial quote" default="" />
+      <RichTextField
+        name="intro"
+        label="Intro paragraph"
+        default=""
+        enabledFeatures={[...richTextPersonalizationFeatures]}
+      />
+      <RichTextField
+        name="quoteText"
+        label="Testimonial quote"
+        default=""
+        enabledFeatures={[...richTextPersonalizationFeatures]}
+      />
       <TextField name="attribution" label="Quote attribution" default="" />
       <TextField name="challengeLabel" label="Challenge label" default="The Challenge" />
       <TextField name="challengePoints" label="Challenge points" allowNewLine default="" />
       <TextField name="solutionLabel" label="Solution label" default="The Solution" />
-      <RichTextField name="solutionIntro" label="Solution intro" default="" />
+      <RichTextField
+        name="solutionIntro"
+        label="Solution intro"
+        default=""
+        enabledFeatures={[...richTextPersonalizationFeatures]}
+      />
       <TextField name="solutionPoints" label="Solution points" allowNewLine default="" />
       <TextField name="resultsLabel" label="Results label" default="The Results" />
       <TextField name="resultsPoints" label="Results points" allowNewLine default="" />

@@ -2,21 +2,47 @@ import {
   ModuleFields,
   TextField,
   RichTextField,
+  ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, splitLines } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  personalize,
+  richTextPersonalizationFeatures,
+  splitLines,
+} from '../../theme';
 
 interface FieldValues {
   heading: string;
   intro: string;
   clientsHeading: string;
   clients: string;
+  bannerImage?: { src?: string; alt?: string };
 }
 
-export function Component({ fieldValues }: { fieldValues: FieldValues }) {
+interface HublData {
+  buyerCompanyName?: string;
+  dealName?: string;
+  isQuoteBlueprint: boolean;
+}
+
+export function Component({
+  fieldValues,
+  hublData,
+}: {
+  fieldValues: FieldValues;
+  hublData: HublData;
+}) {
   const clients = splitLines(fieldValues.clients);
   const midpoint = Math.ceil(clients.length / 2);
   const columns = [clients.slice(0, midpoint), clients.slice(midpoint)];
+  const companyName = hublData.isQuoteBlueprint
+    ? 'Acme Corp'
+    : hublData.buyerCompanyName || hublData.dealName || 'your company';
+  const heading = personalize(fieldValues.heading, { company: companyName });
 
   return (
     <div
@@ -38,10 +64,26 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
           margin: '0 0 calc(var(--spacing-unit) * 2) 0',
         }}
       >
-        {fieldValues.heading}
+        {heading}
       </h2>
 
       <RichTextFieldWrapper tag="div" fieldValue={fieldValues.intro} />
+
+      {fieldValues.bannerImage?.src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={fieldValues.bannerImage.src}
+          alt={fieldValues.bannerImage.alt || ''}
+          style={{
+            width: '100%',
+            maxHeight: 180,
+            objectFit: 'cover',
+            borderRadius: 12,
+            margin: 'calc(var(--spacing-unit) * 3) 0',
+            display: 'block',
+          }}
+        />
+      ) : null}
 
       {clients.length ? (
         <div style={{ marginTop: 'calc(var(--spacing-unit) * 3)' }}>
@@ -89,6 +131,7 @@ export const fields = (
     <TextField
       name="heading"
       label="Heading"
+      helpText="Personalize with {{company}}."
       default="Why Choose MCGlobal Solutions?"
     />
     <RichTextField
@@ -98,6 +141,12 @@ export const fields = (
 <p>Our strength lies in the ability to track, analyze, and manage critical data&mdash;providing operational benefits to organizations across a wide range of industries and scales.</p>
 <p>We achieve this by actively listening to our clients, gaining a deep understanding of their business needs, and applying our extensive industry expertise to develop solutions that support and accelerate their goals.</p>
 <p>MCGlobal Solutions currently partners with clients in 12 countries around the world, including the United States, Germany, the United Kingdom, Portugal, China, Australia, and New Zealand.</p>`}
+      enabledFeatures={[...richTextPersonalizationFeatures]}
+    />
+    <ImageField
+      name="bannerImage"
+      label="Banner image"
+      helpText="Optional decorative image shown below the intro text."
     />
     <TextField
       name="clientsHeading"
@@ -139,5 +188,9 @@ export const meta = {
 };
 
 export const hublDataTemplate = `
-  {% set hublData = {} %}
+  {% set hublData = {
+    "buyerCompanyName": quoteTemplateContext.buyerCompany.name,
+    "dealName": quoteTemplateContext.deal.dealname,
+    "isQuoteBlueprint": isQuoteBlueprint
+  } %}
 `;

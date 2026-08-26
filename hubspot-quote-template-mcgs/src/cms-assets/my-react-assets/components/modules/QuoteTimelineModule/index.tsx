@@ -3,9 +3,17 @@ import {
   TextField,
   RichTextField,
   RepeatedFieldGroup,
+  ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  personalize,
+  richTextPersonalizationFeatures,
+} from '../../theme';
 
 interface TimelineRow {
   phase: string;
@@ -16,11 +24,28 @@ interface FieldValues {
   heading: string;
   intro: string;
   note?: string;
+  bannerImage?: { src?: string; alt?: string };
   rows: TimelineRow[];
 }
 
-export function Component({ fieldValues }: { fieldValues: FieldValues }) {
+interface HublData {
+  buyerCompanyName?: string;
+  dealName?: string;
+  isQuoteBlueprint: boolean;
+}
+
+export function Component({
+  fieldValues,
+  hublData,
+}: {
+  fieldValues: FieldValues;
+  hublData: HublData;
+}) {
   const rows = fieldValues.rows || [];
+  const companyName = hublData.isQuoteBlueprint
+    ? 'Acme Corp'
+    : hublData.buyerCompanyName || hublData.dealName || 'your company';
+  const heading = personalize(fieldValues.heading, { company: companyName });
 
   return (
     <div
@@ -33,6 +58,22 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         lineHeight: 1.6,
       }}
     >
+      {fieldValues.bannerImage?.src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={fieldValues.bannerImage.src}
+          alt={fieldValues.bannerImage.alt || ''}
+          style={{
+            width: '100%',
+            maxHeight: 160,
+            objectFit: 'cover',
+            borderRadius: 12,
+            marginBottom: 'calc(var(--spacing-unit) * 3)',
+            display: 'block',
+          }}
+        />
+      ) : null}
+
       <h2
         style={{
           fontFamily: FONT_HEADING,
@@ -42,7 +83,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
           margin: '0 0 calc(var(--spacing-unit) * 2) 0',
         }}
       >
-        {fieldValues.heading}
+        {heading}
       </h2>
 
       <RichTextFieldWrapper tag="div" fieldValue={fieldValues.intro} />
@@ -100,11 +141,22 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 
 export const fields = (
   <ModuleFields>
-    <TextField name="heading" label="Heading" default="Timeline" />
+    <TextField
+      name="heading"
+      label="Heading"
+      helpText="Personalize with {{company}}."
+      default="Timeline"
+    />
+    <ImageField
+      name="bannerImage"
+      label="Banner image"
+      helpText="Optional decorative image shown at the top of this page."
+    />
     <RichTextField
       name="intro"
       label="Intro"
       default="<p>To complete the work outlined in the project scope, we estimate approximately 13 weeks from beginning to end. This may vary depending on when we receive feedback at each milestone.</p><p>Upon signing the proposal we will order the software licenses and schedule the work to begin as soon as possible.</p>"
+      enabledFeatures={[...richTextPersonalizationFeatures]}
     />
     <TextField name="note" label="Footnote" default="Note, software support is ongoing." />
     <RepeatedFieldGroup
@@ -131,6 +183,8 @@ export const meta = {
 
 export const hublDataTemplate = `
   {% set hublData = {
+    "buyerCompanyName": quoteTemplateContext.buyerCompany.name,
+    "dealName": quoteTemplateContext.deal.dealname,
     "isQuoteBlueprint": isQuoteBlueprint
   } %}
 `;

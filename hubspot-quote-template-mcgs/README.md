@@ -56,12 +56,40 @@ src/cms-assets/my-react-assets/components/modules/
 ├── QuoteCoverModule/            Cover page: logo, hero banner, title, client name, submitted-by/date
 ├── QuoteLetterModule/           "Overview" cover letter with signature block
 ├── QuoteContentSectionsModule/  Reusable heading+body sections (use once for "Project Scope",
-│                                again for "Additional Recommendations")
+│                                again for "Additional Recommendations") + optional banner image
 ├── QuoteFeatureHighlightModule/ Feature callout with screenshots + bullet list (e.g. "AI Predictive Maintenance")
-├── QuoteTimelineModule/         Intro text + Project Phase / Week table
-├── QuoteWhyChooseUsModule/      "Why choose us" copy + two-column client list
+├── QuoteTimelineModule/         Banner image + intro text + Project Phase / Week table
+├── QuoteWhyChooseUsModule/      "Why choose us" copy + optional banner image + two-column client list
 └── QuoteCaseStudiesModule/      Repeatable case-study cards (logo, quote, challenge/solution/results)
 ```
+
+## Editing: text, images, and personalized fields
+
+Every text field in every module is a normal HubSpot **TextField** or
+**RichTextField** — click it in the template/quote editor sidebar and type,
+no code required. Every module also has at least one **ImageField** (logo,
+hero banner, screenshots, case-study logos, or a decorative banner) so you
+can swap in your own pictures the same way.
+
+Two ways to personalize copy per-quote:
+
+1. **Rich text fields** (letter body, section bodies, feature intro, case
+   study quotes) have HubSpot's built-in **personalize** toolbar button
+   enabled — click it in the sidebar's text editor to insert a live
+   contact/company/deal property (first name, company name, etc.) without
+   leaving the editor. They also support headings, lists, links, colors,
+   and inline images.
+2. **Plain text fields** (titles, headings, subtitles) don't get a toolbar
+   button, but support simple `{{token}}` placeholders that resolve
+   automatically from the quote/deal/contact at render time:
+   - `{{company}}` — the buyer's company name (falls back to the deal name)
+   - `{{contact_first_name}}` — the primary buyer contact's first name
+   - `{{sender_first_name}}` / `{{sender_last_name}}` — the quote sender
+   - `{{sender_name}}` — sender's full name (Cover module only)
+
+   Each field's help text in the sidebar lists which tokens it supports.
+   In the template editor (before a real quote exists) these fall back to
+   placeholder values like "Acme Corp" so the layout still looks right.
 
 Brand colors (navy `#182c42`, orange `#ec6820`) were sampled directly from
 the real MCGlobal Solutions logo and centralized in `components/theme.ts`

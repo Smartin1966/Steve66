@@ -58,3 +58,35 @@ export function splitLines(value: string | undefined | null): string[] {
     .map((line) => line.trim())
     .filter(Boolean);
 }
+
+// Lets editors drop {{company}}, {{contact_first_name}}, etc. into plain
+// TextField copy (title/heading/subtitle fields) and have it resolved from
+// the live quote/deal/contact at render time. RichTextField content gets
+// the same tokens PLUS HubSpot's own built-in personalization token picker
+// (see richTextPersonalizationFeatures below) for inserting live CRM
+// properties without leaving the editor.
+export function personalize(
+  text: string | undefined | null,
+  tokens: Record<string, string | undefined | null>
+): string {
+  if (!text) return '';
+  let result = text;
+  for (const [key, value] of Object.entries(tokens)) {
+    result = result.split(`{{${key}}}`).join(value || '');
+  }
+  return result;
+}
+
+// A curated RichTextField toolbar: formatting essentials, inline images,
+// and HubSpot's "personalize" token picker (contact/company/deal
+// properties) so editors aren't limited to plain paragraphs.
+export const richTextPersonalizationFeatures = [
+  'standard_emphasis',
+  'lists',
+  'indents',
+  'alignment',
+  'link',
+  'colors',
+  'personalize',
+  'image',
+] as const;

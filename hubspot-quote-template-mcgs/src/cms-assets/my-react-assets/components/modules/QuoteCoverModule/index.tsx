@@ -4,7 +4,7 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import type { QuoteTemplateContext } from '@hubspot/quote-dev-sdk';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate } from '../../theme';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate, personalize } from '../../theme';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
@@ -43,6 +43,10 @@ export function Component({ fieldValues, hublData }: Props) {
   const publishedLabel = isQuoteBlueprint
     ? '4 March 2026'
     : formatCrmDate(hublData.publishedDate) || 'Not yet submitted';
+
+  const tokens = { company: companyName, sender_name: senderName };
+  const eyebrow = personalize(fieldValues.eyebrow, tokens);
+  const title = personalize(fieldValues.title, tokens);
 
   return (
     <div
@@ -117,7 +121,7 @@ export function Component({ fieldValues, hublData }: Props) {
               marginBottom: 12,
             }}
           >
-            {fieldValues.eyebrow}
+            {eyebrow}
           </div>
         ) : null}
 
@@ -131,7 +135,7 @@ export function Component({ fieldValues, hublData }: Props) {
             margin: 0,
           }}
         >
-          {fieldValues.title}
+          {title}
         </h1>
 
         <div
@@ -196,10 +200,16 @@ export const fields = (
       label="Hero / banner image"
       helpText="Optional. If left blank a navy-to-orange gradient is used instead."
     />
-    <TextField name="eyebrow" label="Eyebrow label" default="Proposal" />
+    <TextField
+      name="eyebrow"
+      label="Eyebrow label"
+      helpText="Personalize with {{company}} or {{sender_name}}."
+      default="Proposal"
+    />
     <TextField
       name="title"
       label="Proposal title"
+      helpText="Personalize with {{company}} or {{sender_name}}."
       default="Enterprise Asset Management System Proposal"
     />
   </ModuleFields>

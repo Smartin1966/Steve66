@@ -5,7 +5,13 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  richTextPersonalizationFeatures,
+} from '../../theme';
 
 interface FieldValues {
   eyebrow: string;
@@ -140,6 +146,7 @@ export const fields = (
 <p>Maintenance personnel will have the flexibility to work both online and offline using smartphones or mobile tablets&mdash;enhancing productivity across the board.</p>
 <p>Since 2007, MCGlobal Solutions has been recognized for our commitment to exceptional customer service and innovative, results-driven maintenance solutions. We look forward to partnering with you to deliver a powerful and future-ready asset management system.</p>
 <p>I welcome the opportunity to discuss the next steps with you.</p>`}
+      enabledFeatures={[...richTextPersonalizationFeatures]}
     />
     <ImageField
       name="signatureImage"

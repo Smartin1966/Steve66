@@ -3,9 +3,17 @@ import {
   TextField,
   RichTextField,
   RepeatedFieldGroup,
+  ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  personalize,
+  richTextPersonalizationFeatures,
+} from '../../theme';
 
 interface SectionItem {
   heading: string;
@@ -15,12 +23,16 @@ interface SectionItem {
 interface FieldValues {
   title: string;
   subtitle?: string;
+  bannerImage?: { src?: string; alt?: string };
   items: SectionItem[];
 }
 
 interface HublData {
   buyerCompanyName?: string;
   dealName?: string;
+  contactFirstName?: string;
+  senderFirstName?: string;
+  senderLastName?: string;
   isQuoteBlueprint: boolean;
 }
 
@@ -34,7 +46,21 @@ export function Component({ fieldValues, hublData }: Props) {
     ? 'Acme Corp'
     : hublData.buyerCompanyName || hublData.dealName || 'your company';
 
-  const subtitle = fieldValues.subtitle?.replace('{{company}}', companyName);
+  const tokens = {
+    company: companyName,
+    contact_first_name: hublData.isQuoteBlueprint
+      ? 'Jordan'
+      : hublData.contactFirstName || 'there',
+    sender_first_name: hublData.isQuoteBlueprint
+      ? 'Steve'
+      : hublData.senderFirstName,
+    sender_last_name: hublData.isQuoteBlueprint
+      ? 'Martin'
+      : hublData.senderLastName,
+  };
+
+  const title = personalize(fieldValues.title, tokens);
+  const subtitle = personalize(fieldValues.subtitle, tokens);
 
   return (
     <div
@@ -56,7 +82,7 @@ export function Component({ fieldValues, hublData }: Props) {
           margin: 0,
         }}
       >
-        {fieldValues.title}
+        {title}
       </h2>
 
       {subtitle ? (
@@ -86,6 +112,20 @@ export function Component({ fieldValues, hublData }: Props) {
           </div>
         ))}
       </div>
+
+      {fieldValues.bannerImage?.src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={fieldValues.bannerImage.src}
+          alt={fieldValues.bannerImage.alt || ''}
+          style={{
+            width: '100%',
+            borderRadius: 12,
+            marginTop: 'calc(var(--spacing-unit) * 3)',
+            display: 'block',
+          }}
+        />
+      ) : null}
     </div>
   );
 }
@@ -96,8 +136,13 @@ export const fields = (
     <TextField
       name="subtitle"
       label="Section subtitle"
-      helpText="Use {{company}} anywhere in this text to insert the buyer's company name automatically."
+      helpText="Personalize with {{company}}, {{contact_first_name}}, {{sender_first_name}} or {{sender_last_name}} - these resolve automatically from the quote."
       default="Proposal for {{company}}'s Enterprise Asset Management Solution"
+    />
+    <ImageField
+      name="bannerImage"
+      label="Banner image"
+      helpText="Optional decorative image shown below the sections."
     />
     <RepeatedFieldGroup
       name="items"
@@ -127,7 +172,12 @@ export const fields = (
       ]}
     >
       <TextField name="heading" label="Heading" default="" />
-      <RichTextField name="description" label="Body" default="" />
+      <RichTextField
+        name="description"
+        label="Body"
+        default=""
+        enabledFeatures={[...richTextPersonalizationFeatures]}
+      />
     </RepeatedFieldGroup>
   </ModuleFields>
 );
@@ -141,6 +191,9 @@ export const hublDataTemplate = `
   {% set hublData = {
     "buyerCompanyName": quoteTemplateContext.buyerCompany.name,
     "dealName": quoteTemplateContext.deal.dealname,
+    "contactFirstName": quoteTemplateContext.buyerContacts[0].firstname if quoteTemplateContext.buyerContacts else null,
+    "senderFirstName": quoteTemplateContext.quote.hs_sender_firstname,
+    "senderLastName": quoteTemplateContext.quote.hs_sender_lastname,
     "isQuoteBlueprint": isQuoteBlueprint
   } %}
 `;

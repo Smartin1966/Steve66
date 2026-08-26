@@ -6,7 +6,14 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, splitLines } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  richTextPersonalizationFeatures,
+  splitLines,
+} from '../../theme';
 
 interface ImageItem {
   image?: { src?: string; alt?: string };
@@ -134,6 +141,7 @@ export const fields = (
       name="intro"
       label="Highlighted intro"
       default="<p>Predict failures with Artificial Intelligence, giving your maintenance department the capability to perform maintenance only when required.</p>"
+      enabledFeatures={[...richTextPersonalizationFeatures]}
     />
     <TextField
       name="bullets"
