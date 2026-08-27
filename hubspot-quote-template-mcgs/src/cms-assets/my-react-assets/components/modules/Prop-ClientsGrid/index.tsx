@@ -5,7 +5,7 @@ import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFi
 
 interface ClientEntry {
   logo?: { src?: string; alt?: string };
-  name: string;
+  clientName: string;
 }
 
 interface FieldValues {
@@ -67,16 +67,16 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
           }}
         >
           {clients.map((client, index) => (
-            <div key={`${client.name}-${index}`} style={{ display: 'flex', alignItems: 'center', minHeight: 28 }}>
+            <div key={`${client.clientName}-${index}`} style={{ display: 'flex', alignItems: 'center', minHeight: 28 }}>
               {client.logo?.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={client.logo.src}
-                  alt={client.logo.alt || client.name}
+                  alt={client.logo.alt || client.clientName}
                   style={{ maxHeight: 28, maxWidth: '100%', display: 'block' }}
                 />
               ) : (
-                <span style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.navy }}>{client.name}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.navy }}>{client.clientName}</span>
               )}
             </div>
           ))}
@@ -99,10 +99,10 @@ export const fields = (
       label="Clients"
       occurrence={{ min: 0, default: CLIENT_NAMES.length }}
       helpText="Add a logo per client if you have one - otherwise the name is shown as text."
-      default={CLIENT_NAMES.map((name) => ({ name }))}
+      default={CLIENT_NAMES.map((name) => ({ clientName: name }))}
     >
       <ImageField name="logo" label="Logo (optional)" />
-      <TextField name="name" label="Client name" default="" />
+      <TextField name="clientName" label="Client name" default="" />
     </RepeatedFieldGroup>
     <BannerImageField name="footerImage" label="Footer photo" />
     <ExtraContentBlocksField />

@@ -11,7 +11,7 @@ import { WedgeCornerFooter } from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface RecommendationSection {
-  label: string;
+  sectionLabel: string;
   highlightIntro: string;
   bodyText?: string;
   listHeading?: string;
@@ -40,7 +40,7 @@ function SectionBlock({ section }: { section: RecommendationSection }) {
           margin: '0 0 6px 0',
         }}
       >
-        {section.label}
+        {section.sectionLabel}
       </h3>
       <div style={{ color: COLORS.orange, fontWeight: 600 }}>
         <RichTextFieldWrapper tag="div" fieldValue={section.highlightIntro} />
@@ -90,7 +90,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         </h2>
 
         {(fieldValues.sections || []).map((section, index) => (
-          <SectionBlock key={`${section.label}-${index}`} section={section} />
+          <SectionBlock key={`${section.sectionLabel}-${index}`} section={section} />
         ))}
 
         <ExtraBlocks blocks={fieldValues.extraBlocks} />
@@ -110,7 +110,7 @@ export const fields = (
       occurrence={{ min: 1, default: 4 }}
       default={[
         {
-          label: 'AI Predictive Maintenance',
+          sectionLabel: 'AI Predictive Maintenance',
           highlightIntro:
             '<p>Predict failures with Artificial Intelligence, giving your maintenance department the capability to perform maintenance only when required.</p>',
           listItems: [
@@ -121,7 +121,7 @@ export const fields = (
           ].join('\n'),
         },
         {
-          label: 'GIS Tracking',
+          sectionLabel: 'GIS Tracking',
           highlightIntro:
             '<p>A web mapping platform for sharing spatial information data through an intuitive interface empowers staff to make informed and accurate decisions, saving time and money.</p>',
           listItems: [
@@ -131,14 +131,14 @@ export const fields = (
           ].join('\n'),
         },
         {
-          label: 'User Acceptance Testing (UAT)',
+          sectionLabel: 'User Acceptance Testing (UAT)',
           highlightIntro:
             "<p>Although not mandatory, we recommend conducting user testing to validate the system's usability and performance before going live.</p>",
           bodyText:
             'Our consultants will develop targeted test plans to identify potential improvements and align the system with real-world user needs.',
         },
         {
-          label: 'Support Tiers',
+          sectionLabel: 'Support Tiers',
           highlightIntro:
             '<p>To maintain and expand your system after launch, we offer ongoing support packages tailored to your needs. We offer three tiers of support&mdash;Platinum, Gold, and Silver&mdash;to provide scalable assistance that evolves with your business.</p>',
           listHeading: 'All packages include:',
@@ -151,7 +151,7 @@ export const fields = (
         },
       ]}
     >
-      <TextField name="label" label="Section label" default="" />
+      <TextField name="sectionLabel" label="Section label" default="" />
       <RichTextField
         name="highlightIntro"
         label="Highlighted intro"

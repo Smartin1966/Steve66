@@ -10,7 +10,7 @@ import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface ColumnPoint {
-  label?: string;
+  pointLabel?: string;
   text: string;
 }
 
@@ -54,9 +54,9 @@ function ColumnCard({ column }: { column: Column }) {
       </div>
       {(column.points || []).map((point, index) => (
         <div key={index} style={{ marginBottom: 10, textAlign: 'center' }}>
-          {point.label ? (
+          {point.pointLabel ? (
             <div style={{ fontFamily: FONT_HEADING, fontWeight: 700, fontSize: 12, color: COLORS.body }}>
-              {point.label}
+              {point.pointLabel}
             </div>
           ) : null}
           <div style={{ fontSize: 12.5, color: COLORS.body }}>{point.text}</div>
@@ -144,11 +144,11 @@ export const fields = (
           title: 'Purpose',
           points: [
             {
-              label: '',
+              pointLabel: '',
               text: "To devote our resources and technical skills to improving our clients' systems and performance.",
             },
             {
-              label: '',
+              pointLabel: '',
               text: 'To be a trusted leader in maintenance management and asset performance consulting, delivering unmatched service worldwide while leading the way with sustainability and community support.',
             },
           ],
@@ -157,19 +157,19 @@ export const fields = (
           title: 'Values',
           points: [
             {
-              label: 'Honesty',
+              pointLabel: 'Honesty',
               text: 'We will be open and honest to build long-term relationships, which are mutually beneficial.',
             },
             {
-              label: 'Respect',
+              pointLabel: 'Respect',
               text: 'We value our staff and clients and will build strong partnerships based on mutual respect.',
             },
             {
-              label: 'Exceed',
+              pointLabel: 'Exceed',
               text: 'We will exceed our clients expectations by delivering exceptional products and services.',
             },
             {
-              label: 'Superior',
+              pointLabel: 'Superior',
               text: "We will listen to our clients' requirements to deliver better solutions through superior knowledge and systems.",
             },
           ],
@@ -177,15 +177,15 @@ export const fields = (
         {
           title: 'Promise',
           points: [
-            { label: '', text: 'We will always recommend the right solution for your operation' },
-            { label: '', text: 'We will provide consultancy backed by real industry experience' },
+            { pointLabel: '', text: 'We will always recommend the right solution for your operation' },
+            { pointLabel: '', text: 'We will provide consultancy backed by real industry experience' },
             {
-              label: '',
+              pointLabel: '',
               text: 'We will get you live and benefiting from your system fast, without unnecessary delay',
             },
-            { label: '', text: 'We will give you real visibility into your maintenance operations' },
+            { pointLabel: '', text: 'We will give you real visibility into your maintenance operations' },
             {
-              label: '',
+              pointLabel: '',
               text: 'We will be approachable, responsive, and available when you need us',
             },
           ],
@@ -194,7 +194,7 @@ export const fields = (
     >
       <TextField name="title" label="Column title" default="" />
       <RepeatedFieldGroup name="points" label="Points" occurrence={{ min: 1, default: 2 }}>
-        <TextField name="label" label="Label (optional)" default="" />
+        <TextField name="pointLabel" label="Label (optional)" default="" />
         <TextField name="text" label="Text" default="" allowNewLine />
       </RepeatedFieldGroup>
     </RepeatedFieldGroup>
