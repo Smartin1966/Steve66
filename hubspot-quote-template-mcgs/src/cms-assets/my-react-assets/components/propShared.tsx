@@ -134,6 +134,7 @@ export function HeroPhotoBanner({
   fillAvailable = false,
   curvedBottom = true,
   titleStyle,
+  logoFallbackText,
 }: {
   image?: ImageValue;
   logo?: ImageValue;
@@ -151,6 +152,10 @@ export function HeroPhotoBanner({
   // Overrides the title's default font/size/color/etc (e.g. from a
   // FontField), merged over the height-based default.
   titleStyle?: CSSProperties;
+  // Text shown in place of the branded wordmark when no logo image is
+  // set (e.g. an editable field so an editor can type their own company
+  // name instead of the hardcoded "MCGLOBAL SOLUTIONS" wordmark).
+  logoFallbackText?: string;
 }) {
   return (
     <div
@@ -186,7 +191,22 @@ export function HeroPhotoBanner({
         />
       ) : (
         <div style={{ marginBottom: 10 }}>
-          <Wordmark light />
+          {logoFallbackText ? (
+            <span
+              style={{
+                fontFamily: FONT_HEADING,
+                fontWeight: 700,
+                fontSize: 18,
+                letterSpacing: 0.5,
+                color: '#ffffff',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {logoFallbackText}
+            </span>
+          ) : (
+            <Wordmark light />
+          )}
         </div>
       )}
       {title ? (

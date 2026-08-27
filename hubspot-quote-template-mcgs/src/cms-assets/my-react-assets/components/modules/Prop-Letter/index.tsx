@@ -12,6 +12,7 @@ import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   heroImage?: { src?: string; alt?: string };
   title: string;
   greetingPrefix: string;
@@ -63,7 +64,13 @@ export function Component({
         backgroundColor: COLORS.paper,
       }}
     >
-      <HeroPhotoBanner image={fieldValues.heroImage} logo={fieldValues.logo} title={fieldValues.title} height={180} />
+      <HeroPhotoBanner
+        image={fieldValues.heroImage}
+        logo={fieldValues.logo}
+        title={fieldValues.title}
+        height={180}
+        logoFallbackText={fieldValues.logoFallbackText}
+      />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.6, flex: 1 }}>
         <p style={{ margin: '0 0 calc(var(--spacing-unit) * 2) 0' }}>
@@ -118,6 +125,12 @@ export function Component({
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <TextField
+      name="logoFallbackText"
+      label="Logo fallback text"
+      helpText="Shown in place of the logo image if no logo is uploaded above. Leave blank to use the default MCGLOBAL SOLUTIONS wordmark."
+      default="MCGLOBAL SOLUTIONS"
+    />
     <BannerImageField name="heroImage" label="Header photo" />
     <TextField name="title" label="Header title" default="Solution Proposal" />
     <TextField name="greetingPrefix" label="Greeting prefix" default="Dear" />
