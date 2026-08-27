@@ -34,6 +34,26 @@ export function BannerImageField({
   );
 }
 
+export function HeaderBannerImageField({ name = 'headerBannerImage' }: { name?: string } = {}) {
+  return (
+    <ImageField
+      name={name}
+      label="Header banner image"
+      helpText="Optional. Upload your own graphic to replace the whole header banner (wedge shapes + logo). Leave blank to use the built-in navy/orange wedge design below."
+    />
+  );
+}
+
+export function FooterBannerImageField({ name = 'footerBannerImage' }: { name?: string } = {}) {
+  return (
+    <ImageField
+      name={name}
+      label="Footer banner image"
+      helpText="Optional. Upload your own graphic to replace the small decorative corner wedge. Leave blank to use the built-in design."
+    />
+  );
+}
+
 function Wordmark({ light }: { light?: boolean }) {
   return (
     <span
@@ -54,7 +74,26 @@ function Wordmark({ light }: { light?: boolean }) {
 
 // The diagonal navy/orange bar + logo used at the top of most interior
 // pages (Services, Why Choose Us, Fees header, Clients grid, Case studies).
-export function WedgeTopBanner({ logo }: { logo?: ImageValue }) {
+// If bannerImage is set, it replaces the whole banner (wedge shapes + logo)
+// with the uploaded graphic instead - useful for pixel-matching a real
+// exported design asset rather than the CSS recreation below.
+export function WedgeTopBanner({
+  logo,
+  bannerImage,
+}: {
+  logo?: ImageValue;
+  bannerImage?: ImageValue;
+}) {
+  if (bannerImage?.src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={bannerImage.src}
+        alt={bannerImage.alt || 'Header banner'}
+        style={{ width: '100%', height: 'auto', display: 'block' }}
+      />
+    );
+  }
   return (
     <div
       style={{
@@ -91,8 +130,21 @@ export function WedgeTopBanner({ logo }: { logo?: ImageValue }) {
 }
 
 // Small decorative navy/orange wedge in the bottom-right corner, used on
-// pages that don't carry a full photo footer banner.
-export function WedgeCornerFooter() {
+// pages that don't carry a full photo footer banner. If bannerImage is
+// set, it replaces the wedge with the uploaded graphic instead.
+export function WedgeCornerFooter({ bannerImage }: { bannerImage?: ImageValue } = {}) {
+  if (bannerImage?.src) {
+    return (
+      <div style={{ marginTop: 'auto' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={bannerImage.src}
+          alt={bannerImage.alt || 'Footer banner'}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
+      </div>
+    );
+  }
   return (
     <div
       style={{

@@ -13,7 +13,13 @@ import {
   personalize,
   richTextPersonalizationFeatures,
 } from '../../theme';
-import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '../../propShared';
+import {
+  LogoField,
+  BannerImageField,
+  HeaderBannerImageField,
+  WedgeTopBanner,
+  PhotoFooterBanner,
+} from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface ServiceItem {
@@ -23,6 +29,7 @@ interface ServiceItem {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  headerBannerImage?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
   footerLabel: string;
   title: string;
@@ -60,7 +67,7 @@ export function Component({
         backgroundColor: COLORS.paper,
       }}
     >
-      <WedgeTopBanner logo={fieldValues.logo} />
+      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.6 }}>
         <h2
@@ -109,6 +116,7 @@ export function Component({
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <HeaderBannerImageField />
     <TextField name="title" label="Title" default="Our Services" />
     <TextField
       name="subtitle"

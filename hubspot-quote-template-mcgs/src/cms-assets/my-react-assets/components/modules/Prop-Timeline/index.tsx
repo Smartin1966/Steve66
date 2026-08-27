@@ -6,7 +6,13 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, richTextPersonalizationFeatures } from '../../theme';
-import { LogoField, BannerImageField, HeroPhotoBanner, WedgeCornerFooter } from '../../propShared';
+import {
+  LogoField,
+  BannerImageField,
+  FooterBannerImageField,
+  HeroPhotoBanner,
+  WedgeCornerFooter,
+} from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface TimelineRow {
@@ -17,6 +23,7 @@ interface TimelineRow {
 interface FieldValues {
   logo?: { src?: string; alt?: string };
   heroImage?: { src?: string; alt?: string };
+  footerBannerImage?: { src?: string; alt?: string };
   title: string;
   heading: string;
   intro: string;
@@ -101,7 +108,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         <ExtraBlocks blocks={fieldValues.extraBlocks} />
       </div>
 
-      <WedgeCornerFooter />
+      <WedgeCornerFooter bannerImage={fieldValues.footerBannerImage} />
     </div>
   );
 }
@@ -133,6 +140,7 @@ export const fields = (
       <TextField name="phase" label="Phase" default="" />
       <TextField name="week" label="Week" default="" />
     </RepeatedFieldGroup>
+    <FooterBannerImageField />
     <ExtraContentBlocksField />
   </ModuleFields>
 );

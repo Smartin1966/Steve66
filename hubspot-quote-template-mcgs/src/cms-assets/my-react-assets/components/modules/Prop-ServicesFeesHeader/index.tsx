@@ -4,17 +4,18 @@
 // flows naturally instead of forcing its own page.
 import { ModuleFields, TextField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING, FONT_BODY } from '../../theme';
-import { LogoField, WedgeTopBanner } from '../../propShared';
+import { LogoField, HeaderBannerImageField, WedgeTopBanner } from '../../propShared';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  headerBannerImage?: { src?: string; alt?: string };
   title: string;
 }
 
 export function Component({ fieldValues }: { fieldValues: FieldValues }) {
   return (
     <div style={{ fontFamily: FONT_BODY, color: COLORS.body, backgroundColor: COLORS.paper }}>
-      <WedgeTopBanner logo={fieldValues.logo} />
+      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
       <h2
         style={{
           fontFamily: FONT_HEADING,
@@ -34,6 +35,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <HeaderBannerImageField />
     <TextField name="title" label="Title" default="Services Fees" />
   </ModuleFields>
 );

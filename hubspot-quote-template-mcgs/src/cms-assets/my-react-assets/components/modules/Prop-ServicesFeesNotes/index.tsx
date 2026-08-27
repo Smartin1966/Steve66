@@ -4,10 +4,11 @@
 // Prop-ServicesFeesHeader.
 import { ModuleFields, TextField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_BODY, splitLines } from '../../theme';
-import { WedgeCornerFooter } from '../../propShared';
+import { FooterBannerImageField, WedgeCornerFooter } from '../../propShared';
 
 interface FieldValues {
   notes: string;
+  footerBannerImage?: { src?: string; alt?: string };
 }
 
 export function Component({ fieldValues }: { fieldValues: FieldValues }) {
@@ -21,7 +22,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
           </p>
         ))}
       </div>
-      <WedgeCornerFooter />
+      <WedgeCornerFooter bannerImage={fieldValues.footerBannerImage} />
     </div>
   );
 }
@@ -38,6 +39,7 @@ export const fields = (
         'Travel costs for onsite work are charged at cost plus 10%.',
       ].join('\n')}
     />
+    <FooterBannerImageField />
   </ModuleFields>
 );
 

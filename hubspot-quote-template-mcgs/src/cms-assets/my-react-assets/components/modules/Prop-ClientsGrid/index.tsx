@@ -1,6 +1,12 @@
 import { ModuleFields, TextField, RepeatedFieldGroup, ImageField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
-import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '../../propShared';
+import {
+  LogoField,
+  BannerImageField,
+  HeaderBannerImageField,
+  WedgeTopBanner,
+  PhotoFooterBanner,
+} from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface ClientEntry {
@@ -10,6 +16,7 @@ interface ClientEntry {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  headerBannerImage?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
   footerLabel: string;
   heading: string;
@@ -44,7 +51,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         backgroundColor: COLORS.paper,
       }}
     >
-      <WedgeTopBanner logo={fieldValues.logo} />
+      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)' }}>
         <h2
@@ -89,6 +96,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <HeaderBannerImageField />
     <TextField name="heading" label="Heading" default="Who We've Worked With" />
     <RepeatedFieldGroup
       name="clients"

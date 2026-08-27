@@ -7,7 +7,7 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, richTextPersonalizationFeatures, splitLines } from '../../theme';
-import { WedgeCornerFooter } from '../../propShared';
+import { FooterBannerImageField, WedgeCornerFooter } from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface RecommendationSection {
@@ -22,6 +22,7 @@ interface RecommendationSection {
 interface FieldValues {
   heading: string;
   sections: RecommendationSection[];
+  footerBannerImage?: { src?: string; alt?: string };
   extraBlocks?: ExtraBlock[];
 }
 
@@ -96,7 +97,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         <ExtraBlocks blocks={fieldValues.extraBlocks} />
       </div>
 
-      <WedgeCornerFooter />
+      <WedgeCornerFooter bannerImage={fieldValues.footerBannerImage} />
     </div>
   );
 }
@@ -163,6 +164,7 @@ export const fields = (
       <BooleanField name="numbered" label="Numbered list?" default={false} />
       <TextField name="listItems" label="List items (optional)" allowNewLine helpText="One item per line." default="" />
     </RepeatedFieldGroup>
+    <FooterBannerImageField />
     <ExtraContentBlocksField />
   </ModuleFields>
 );

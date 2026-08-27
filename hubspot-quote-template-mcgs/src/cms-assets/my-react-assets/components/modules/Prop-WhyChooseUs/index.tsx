@@ -6,7 +6,13 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, richTextPersonalizationFeatures } from '../../theme';
-import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '../../propShared';
+import {
+  LogoField,
+  BannerImageField,
+  HeaderBannerImageField,
+  WedgeTopBanner,
+  PhotoFooterBanner,
+} from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface ColumnPoint {
@@ -21,6 +27,7 @@ interface Column {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  headerBannerImage?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
   footerLabel: string;
   heading: string;
@@ -79,7 +86,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         backgroundColor: COLORS.paper,
       }}
     >
-      <WedgeTopBanner logo={fieldValues.logo} />
+      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.6 }}>
         <h2
@@ -125,6 +132,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <HeaderBannerImageField />
     <TextField name="heading" label="Heading" default="Why Choose MCGlobal Solutions" />
     <RichTextField
       name="intro"

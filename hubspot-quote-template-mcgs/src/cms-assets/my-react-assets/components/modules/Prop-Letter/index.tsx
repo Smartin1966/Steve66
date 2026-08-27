@@ -7,13 +7,20 @@ import {
   A4_PAGE,
   richTextPersonalizationFeatures,
 } from '../../theme';
-import { LogoField, BannerImageField, HeroPhotoBanner, WedgeCornerFooter } from '../../propShared';
+import {
+  LogoField,
+  BannerImageField,
+  FooterBannerImageField,
+  HeroPhotoBanner,
+  WedgeCornerFooter,
+} from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
   logoFallbackText?: string;
   heroImage?: { src?: string; alt?: string };
+  footerBannerImage?: { src?: string; alt?: string };
   title: string;
   greetingPrefix: string;
   letterBody: string;
@@ -117,7 +124,7 @@ export function Component({
         <ExtraBlocks blocks={fieldValues.extraBlocks} />
       </div>
 
-      <WedgeCornerFooter />
+      <WedgeCornerFooter bannerImage={fieldValues.footerBannerImage} />
     </div>
   );
 }
@@ -147,6 +154,7 @@ export const fields = (
     />
     <ImageField name="signatureImage" label="Signature image" helpText="Optional. A scanned or drawn signature graphic." />
     <TextField name="senderEmail" label="Sender email (fallback)" helpText="Used only if the quote has no sender email set." default="smartin@mcgsol.com.au" />
+    <FooterBannerImageField />
     <ExtraContentBlocksField />
   </ModuleFields>
 );
