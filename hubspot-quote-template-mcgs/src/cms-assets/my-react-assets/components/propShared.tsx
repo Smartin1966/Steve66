@@ -130,26 +130,37 @@ export function HeroPhotoBanner({
   title,
   height,
   contentAlign = 'center',
+  fillAvailable = false,
+  curvedBottom = true,
 }: {
   image?: ImageValue;
   logo?: ImageValue;
   title?: string;
   height: number;
   contentAlign?: 'center' | 'top';
+  // Grows to fill all remaining vertical space in its flex-column parent
+  // instead of using a fixed height, so the photo's bottom edge always
+  // meets whatever comes right after it with no gap. `height` is still
+  // used as the reference size for scaling the logo/title.
+  fillAvailable?: boolean;
+  // Set false to square off the bottom edge instead of the default
+  // curved/eyebrow cut.
+  curvedBottom?: boolean;
 }) {
   return (
     <div
       style={{
         position: 'relative',
-        height,
+        ...(fillAvailable ? { flex: '1 1 auto' } : { height }),
         backgroundColor: COLORS.navy,
         backgroundImage: image?.src
           ? `linear-gradient(180deg, rgba(24,44,66,0.35), rgba(24,44,66,0.55)), url(${image.src})`
           : `linear-gradient(135deg, ${COLORS.navy} 0%, #23374f 55%, ${COLORS.orange} 150%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        borderBottomLeftRadius: '50% 24px',
-        borderBottomRightRadius: '50% 24px',
+        ...(curvedBottom
+          ? { borderBottomLeftRadius: '50% 24px', borderBottomRightRadius: '50% 24px' }
+          : null),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

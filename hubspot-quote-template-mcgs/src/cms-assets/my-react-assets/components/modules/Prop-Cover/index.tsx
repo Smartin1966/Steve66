@@ -69,6 +69,8 @@ export function Component({
         title={fieldValues.title}
         height={680}
         contentAlign="top"
+        fillAvailable
+        curvedBottom={false}
       />
 
       <div
@@ -81,7 +83,6 @@ export function Component({
           fontSize: 20,
           textTransform: 'uppercase',
           padding: 'calc(var(--spacing-unit) * 2)',
-          marginTop: 'auto',
         }}
       >
         {highlightIndex >= 0 ? (
