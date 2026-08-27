@@ -1,10 +1,10 @@
 import { ModuleFields, TextField, RepeatedFieldGroup, ImageField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
 import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '../../propShared';
-import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface ClientEntry {
-  logo?: { src?: string; alt?: string };
+  logo?: { src?: string; alt?: string; width?: number; height?: number };
   clientName: string;
 }
 
@@ -69,12 +69,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
           {clients.map((client, index) => (
             <div key={`${client.clientName}-${index}`} style={{ display: 'flex', alignItems: 'center', minHeight: 28 }}>
               {client.logo?.src ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={client.logo.src}
-                  alt={client.logo.alt || client.clientName}
-                  style={{ maxHeight: 28, maxWidth: '100%', display: 'block' }}
-                />
+                <LogoImage image={client.logo} fallbackHeight={28} alt={client.clientName} />
               ) : (
                 <span style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.navy }}>{client.clientName}</span>
               )}
