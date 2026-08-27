@@ -5,8 +5,7 @@
 // curved edge, and a small corner wedge) repeated across most pages.
 import { ImageField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING } from './theme';
-
-type ImageValue = { src?: string; alt?: string } | undefined;
+import { LogoImage, LogoValue as ImageValue } from './sharedFields';
 
 export function LogoField({ name = 'logo' }: { name?: string } = {}) {
   return (
@@ -81,8 +80,7 @@ export function WedgeTopBanner({ logo }: { logo?: ImageValue }) {
       />
       <div style={{ position: 'relative' }}>
         {logo?.src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={logo.src} alt={logo.alt || 'Company logo'} style={{ height: 26, display: 'block' }} />
+          <LogoImage image={logo} fallbackHeight={26} alt="Company logo" />
         ) : (
           <Wordmark />
         )}
@@ -159,11 +157,11 @@ export function HeroPhotoBanner({
       }}
     >
       {logo?.src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={logo.src}
-          alt={logo.alt || 'Company logo'}
-          style={{ height: Math.min(40, height * 0.22), display: 'block', marginBottom: 10 }}
+        <LogoImage
+          image={logo}
+          fallbackHeight={Math.min(40, height * 0.22)}
+          alt="Company logo"
+          style={{ marginBottom: 10 }}
         />
       ) : (
         <div style={{ marginBottom: 10 }}>

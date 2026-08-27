@@ -5,10 +5,10 @@ import {
 } from '@hubspot/cms-components/fields';
 import type { QuoteTemplateContext } from '@hubspot/quote-dev-sdk';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate, personalize } from '../../theme';
-import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface FieldValues {
-  logo?: { src?: string; alt?: string };
+  logo?: { src?: string; alt?: string; width?: number; height?: number };
   heroImage?: { src?: string; alt?: string };
   eyebrow: string;
   title: string;
@@ -67,12 +67,7 @@ export function Component({ fieldValues, hublData }: Props) {
         }}
       >
         {fieldValues.logo?.src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={fieldValues.logo.src}
-            alt={fieldValues.logo.alt || 'Company logo'}
-            style={{ height: 44, display: 'block' }}
-          />
+          <LogoImage image={fieldValues.logo} fallbackHeight={44} alt="Company logo" />
         ) : (
           <div
             style={{

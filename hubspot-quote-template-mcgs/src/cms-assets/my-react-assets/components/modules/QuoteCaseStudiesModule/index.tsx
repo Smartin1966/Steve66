@@ -14,10 +14,10 @@ import {
   richTextPersonalizationFeatures,
   splitLines,
 } from '../../theme';
-import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface CaseStudy {
-  logo?: { src?: string; alt?: string };
+  logo?: { src?: string; alt?: string; width?: number; height?: number };
   companyName: string;
   intro: string;
   quoteText: string;
@@ -82,12 +82,7 @@ function CaseStudyCard({ study, isFirst }: { study: CaseStudy; isFirst: boolean 
           CMMS Case Study
         </h2>
         {study.logo?.src ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={study.logo.src}
-            alt={study.logo.alt || study.companyName}
-            style={{ height: 36, display: 'block' }}
-          />
+          <LogoImage image={study.logo} fallbackHeight={36} alt={study.companyName} />
         ) : (
           <div style={{ fontFamily: FONT_HEADING, fontWeight: 700, color: COLORS.navy }}>
             {study.companyName}

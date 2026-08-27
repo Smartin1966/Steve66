@@ -12,12 +12,12 @@ import {
   A4_PAGE,
   richTextPersonalizationFeatures,
 } from '../../theme';
-import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface FieldValues {
   eyebrow: string;
   letterBody: string;
-  signatureImage?: { src?: string; alt?: string };
+  signatureImage?: { src?: string; alt?: string; width?: number; height?: number };
   senderJobTitle?: string;
   websiteLabel?: string;
   footerLabel?: string;
@@ -86,11 +86,11 @@ export function Component({ fieldValues, hublData }: Props) {
       <p style={{ marginTop: 'calc(var(--spacing-unit) * 3)' }}>Sincerely,</p>
 
       {fieldValues.signatureImage?.src ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={fieldValues.signatureImage.src}
-          alt={fieldValues.signatureImage.alt || 'Signature'}
-          style={{ height: 48, display: 'block', margin: '4px 0 12px' }}
+        <LogoImage
+          image={fieldValues.signatureImage}
+          fallbackHeight={48}
+          alt="Signature"
+          style={{ margin: '4px 0 12px' }}
         />
       ) : null}
 

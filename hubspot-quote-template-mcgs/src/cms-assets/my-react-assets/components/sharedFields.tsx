@@ -2,6 +2,7 @@
 // so editors are never limited to the fixed fields a module ships with.
 // Each block is optional-everything: an image, a caption, a heading, and
 // rich text - fill in only what a given block needs.
+import type { CSSProperties } from 'react';
 import {
   RepeatedFieldGroup,
   ImageField,
@@ -16,6 +17,51 @@ export interface ExtraBlock {
   caption?: string;
   heading?: string;
   text?: string;
+}
+
+export type LogoValue =
+  | {
+      src?: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+      max_width?: number;
+      max_height?: number;
+    }
+  | undefined;
+
+// Renders a logo/signature image respecting the width/height set in
+// HubSpot's image field editor (crop/resize panel) instead of forcing a
+// fixed pixel height that ignores it. Falls back to a sensible height,
+// scaled proportionally, only when the field carries no explicit size yet.
+export function LogoImage({
+  image,
+  fallbackHeight,
+  alt,
+  style,
+}: {
+  image: LogoValue;
+  fallbackHeight: number;
+  alt: string;
+  style?: CSSProperties;
+}) {
+  if (!image?.src) return null;
+  const hasExplicitSize = Boolean(image.width && image.height);
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={image.src}
+      alt={image.alt || alt}
+      style={{
+        display: 'block',
+        maxWidth: '100%',
+        ...(hasExplicitSize
+          ? { width: image.width, height: image.height, maxHeight: fallbackHeight * 2 }
+          : { height: fallbackHeight, width: 'auto' }),
+        ...style,
+      }}
+    />
+  );
 }
 
 export function ExtraContentBlocksField({

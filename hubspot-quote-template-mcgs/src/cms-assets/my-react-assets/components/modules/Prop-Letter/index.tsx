@@ -8,7 +8,7 @@ import {
   richTextPersonalizationFeatures,
 } from '../../theme';
 import { LogoField, BannerImageField, HeroPhotoBanner, WedgeCornerFooter } from '../../propShared';
-import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField, LogoImage } from '../../sharedFields';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
@@ -90,12 +90,7 @@ export function Component({
           <div style={{ width: 16, height: 16, border: `1.5px solid ${COLORS.navy}` }} />
           <div>
             {fieldValues.signatureImage?.src ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={fieldValues.signatureImage.src}
-                alt={fieldValues.signatureImage.alt || 'Signature'}
-                style={{ height: 34, display: 'block' }}
-              />
+              <LogoImage image={fieldValues.signatureImage} fallbackHeight={34} alt="Signature" />
             ) : (
               <div style={{ fontStyle: 'italic', color: COLORS.muted, borderBottom: `1px solid ${COLORS.border}`, paddingBottom: 2 }}>
                 Signature
