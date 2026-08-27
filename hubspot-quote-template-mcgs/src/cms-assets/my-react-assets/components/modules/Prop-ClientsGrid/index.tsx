@@ -11,6 +11,7 @@ interface ClientEntry {
 interface FieldValues {
   logo?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
+  footerLabel: string;
   heading: string;
   clients: ClientEntry[];
   extraBlocks?: ExtraBlock[];
@@ -80,7 +81,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         <ExtraBlocks blocks={fieldValues.extraBlocks} />
       </div>
 
-      <PhotoFooterBanner image={fieldValues.footerImage} />
+      <PhotoFooterBanner image={fieldValues.footerImage} label={fieldValues.footerLabel} />
     </div>
   );
 }
@@ -100,6 +101,7 @@ export const fields = (
       <TextField name="clientName" label="Client name" default="" />
     </RepeatedFieldGroup>
     <BannerImageField name="footerImage" label="Footer photo" />
+    <TextField name="footerLabel" label="Footer text" default="Solution Proposal" />
     <ExtraContentBlocksField />
   </ModuleFields>
 );
