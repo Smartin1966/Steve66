@@ -54,10 +54,15 @@ export function LogoImage({
       alt={image.alt || alt}
       style={{
         display: 'block',
-        maxWidth: '100%',
+        // When the field has an explicit width+height (set via HubSpot's
+        // image field resize/crop panel), trust it completely - no extra
+        // max-width/max-height caps, which would clamp one dimension
+        // without the other and distort the image's proportions. Only
+        // fall back to a proportional default height when no explicit
+        // size has been set yet.
         ...(hasExplicitSize
-          ? { width: image.width, height: image.height, maxHeight: fallbackHeight * 2 }
-          : { height: fallbackHeight, width: 'auto' }),
+          ? { width: image.width, height: image.height }
+          : { height: fallbackHeight, width: 'auto', maxWidth: '100%' }),
         ...style,
       }}
     />
