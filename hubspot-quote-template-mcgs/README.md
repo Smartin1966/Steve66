@@ -1,8 +1,9 @@
 # MCGlobal Solutions — Coded Quote Template for HubSpot Revenue Hub
 
-This project recreates the design of `MCGlobal_Proposal_Ultimo_Template01.pdf`
-as **code**, so you don't have to hand-build the 11-page proposal layout
-inside HubSpot's drag-and-drop quote template editor.
+This project recreates two PDF proposal templates — `MCGlobal_Proposal_Ultimo_Template01.pdf`
+(the `Quote*` modules) and `Solution_Proposal.pdf` (the `Prop-*` modules) —
+as **code**, so you don't have to hand-build either 11-page layout inside
+HubSpot's drag-and-drop quote template editor.
 
 ## How this actually works in HubSpot (important context)
 
@@ -63,6 +64,35 @@ src/cms-assets/my-react-assets/components/modules/
 └── QuoteCaseStudiesModule/      Repeatable case-study cards (logo, quote, challenge/solution/results)
 ```
 
+A second module set, prefixed `Prop-`, recreates a different template —
+`Solution_Proposal.pdf` — with its own visual system (diagonal wedge
+banners, a hero-photo banner with a curved edge, a 3-column Purpose/
+Values/Promise grid, a 48-logo client wall, and photo-overlay case
+studies). It shares the same brand colors/A4 sizing/personalization/extra
+blocks infrastructure (`theme.ts`, `sharedFields.tsx`) plus a new
+`propShared.tsx` for its banner styles:
+
+```
+src/cms-assets/my-react-assets/components/modules/
+├── Prop-Cover/                    Hero photo, title, tagline band, purchasing-company/date/sender meta
+├── Prop-Letter/                   Header photo banner + letter body + signature block
+├── Prop-Services/                 "Our Services" heading+subtitle + repeatable service sections + footer photo banner
+├── Prop-WhyChooseUs/              "Why Choose Us" copy + Purpose/Values/Promise 3-column grid + footer photo banner
+├── Prop-ServicesFeesHeader/       Compact banner + "Services Fees" title (goes ABOVE the native Line Items module)
+├── Prop-ServicesFeesNotes/        Compact footnotes + corner wedge (goes BELOW the native Line Items module)
+├── Prop-Timeline/                 Header photo banner + intro + Project Phase / Week table
+├── Prop-AdditionalRecommendations/ Repeatable labeled sections (AI Predictive Maintenance, GIS Tracking, UAT, Support Tiers)
+├── Prop-ClientsGrid/               "Who We've Worked With" + all 48 client names pre-filled (add logos per client)
+└── Prop-CaseStudies/               Repeatable case studies, rendered two per A4 page, photo with quote overlay + Challenge/Solution/Key Outcomes
+```
+
+`Prop-ServicesFeesHeader` and `Prop-ServicesFeesNotes` are the only two
+modules that are **not** full A4 pages — they're compact fragments that sit
+directly above and below HubSpot's native Line Items module (whose height
+depends on the deal's real line items, so it can't be pre-sized), letting
+that one module span across what would otherwise be two PDF pages just
+like the original.
+
 ## Editing: text, images, and personalized fields
 
 Every text field in every module is a normal HubSpot **TextField** or
@@ -117,10 +147,13 @@ so every module stays visually consistent. The extracted logo file is at
 `assets/mcglobal-solutions-logo.png` — upload it to HubSpot's file manager
 once, then point the Cover module's "Company logo" field at it.
 
-Note: the original PDF's stock photography and the third-party software
-screenshot (Ultimo/Accruent UI) aren't bundled here — licensing on those
-assets is unknown. The `heroImage` and screenshot fields are just left
-empty for you to fill in with your own licensed images.
+Note: the original PDFs' stock/case-study photography (both templates'
+hero and banner photos, the 4 Prop-CaseStudies photos) and the third-party
+logos (the Ultimo/Accruent software screenshot, and the 48 client logos in
+Prop-ClientsGrid) aren't bundled here — licensing on those assets is
+unknown. Those fields are just left empty for you to fill in with your own
+licensed images; text (client names, etc.) is still pre-filled everywhere
+it's available.
 
 ## Prerequisites
 
@@ -168,6 +201,28 @@ quotes.
 4. Save, then select this template when creating a quote — every field
    above is editable per-quote/per-template from the sidebar, no code
    changes required for day-to-day use.
+
+## Assembling the Prop- template in HubSpot
+
+Create a **separate** quote template for this one (don't mix it into the
+MCGS template above). In **Customize quote template**, add modules in this
+order:
+
+1. `Prop- Cover Page`
+2. `Prop- Cover Letter`
+3. `Prop- Our Services` → defaults pre-filled with the 5 services from the PDF
+4. `Prop- Why Choose Us` → defaults pre-filled with the intro copy and the Purpose/Values/Promise grid
+5. `Prop- Services Fees Header` → sets the "Services Fees" title + banner
+6. HubSpot's native **Line items** module → configure columns as Description / Price / Hrs-or-Qty / Amount
+7. `Prop- Services Fees Notes` → the two italic footnotes + corner wedge
+8. `Prop- Timeline` → defaults pre-filled with the 4 project phases
+9. `Prop- Additional Recommendations` → defaults pre-filled with AI Predictive Maintenance, GIS Tracking, UAT, and Support Tiers
+10. `Prop- Clients Grid` → all 48 client names from the PDF are pre-filled; add each client's logo file if/when you have one
+11. `Prop- Case Studies` → defaults pre-filled with all 4 case studies (Voyages, News Corp, Devro, BEP), rendered two per page automatically; upload each study's photo
+12. HubSpot's native **Signature** module
+
+Same as above: set the template's theme color to `#182c42` navy /
+`#ec6820` orange so the native Line Items and Signature modules match.
 
 ## Editing content later
 

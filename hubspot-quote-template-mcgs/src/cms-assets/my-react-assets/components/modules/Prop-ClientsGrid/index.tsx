@@ -1,0 +1,119 @@
+import { ModuleFields, TextField, RepeatedFieldGroup, ImageField } from '@hubspot/cms-components/fields';
+import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
+import { LogoField, BannerImageField, WedgeTopBanner, PhotoFooterBanner } from '../../propShared';
+import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
+
+interface ClientEntry {
+  logo?: { src?: string; alt?: string };
+  name: string;
+}
+
+interface FieldValues {
+  logo?: { src?: string; alt?: string };
+  footerImage?: { src?: string; alt?: string };
+  heading: string;
+  clients: ClientEntry[];
+  extraBlocks?: ExtraBlock[];
+}
+
+const CLIENT_NAMES = [
+  'A-GAS', 'AAH', 'AIRBUS', 'BAND-IT', 'BaptistCare',
+  'BASF', 'Cambridge Assessment', 'Central Petroleum', 'Churchill', 'Harwich Haven Authority',
+  'Coffs Harbour Airport', 'DEVRO', 'DEXION', 'Elements of Byron', 'eni',
+  'Envision AESC', 'eog resources', 'Woolnorth Renewables', 'Farmers', "Fisher & Paykel Healthcare",
+  'Fremantle Ports', 'Hamilton City Council', 'iOR', 'LAVAZZA', 'Matrix Composites & Engineering',
+  'Metagenics', 'Ministry for Primary Industries', 'Mount Isa Water Board', "Mrs Mac's", 'News Corp Australia',
+  'Numurkah Solar Farm', 'Palisade', 'Port Authority of New South Wales', 'Ross River Solar Farm', 'Sanitarium',
+  'Scentre Group', 'Alpine Resorts Victoria', 'Siemens Healthineers', 'Sodexo', 'Sunshine Coast Airport',
+  'Sunstate Cement Ltd', 'Tassal', 'United', 'Valspar', 'Virgin Limited Edition',
+  'Voyages Indigenous Tourism', 'Woodside Energy', 'Woollam Constructions',
+];
+
+export function Component({ fieldValues }: { fieldValues: FieldValues }) {
+  const clients = fieldValues.clients || [];
+
+  return (
+    <div
+      style={{
+        ...A4_PAGE,
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: FONT_BODY,
+        color: COLORS.body,
+        backgroundColor: COLORS.paper,
+      }}
+    >
+      <WedgeTopBanner logo={fieldValues.logo} />
+
+      <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)' }}>
+        <h2
+          style={{
+            fontFamily: FONT_HEADING,
+            color: COLORS.navy,
+            fontWeight: 700,
+            fontSize: 28,
+            margin: '0 0 calc(var(--spacing-unit) * 3) 0',
+          }}
+        >
+          {fieldValues.heading}
+        </h2>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '10px 14px',
+            alignItems: 'center',
+          }}
+        >
+          {clients.map((client, index) => (
+            <div key={`${client.name}-${index}`} style={{ display: 'flex', alignItems: 'center', minHeight: 28 }}>
+              {client.logo?.src ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={client.logo.src}
+                  alt={client.logo.alt || client.name}
+                  style={{ maxHeight: 28, maxWidth: '100%', display: 'block' }}
+                />
+              ) : (
+                <span style={{ fontSize: 12.5, fontWeight: 600, color: COLORS.navy }}>{client.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <ExtraBlocks blocks={fieldValues.extraBlocks} />
+      </div>
+
+      <PhotoFooterBanner image={fieldValues.footerImage} />
+    </div>
+  );
+}
+
+export const fields = (
+  <ModuleFields>
+    <LogoField />
+    <TextField name="heading" label="Heading" default="Who We've Worked With" />
+    <RepeatedFieldGroup
+      name="clients"
+      label="Clients"
+      occurrence={{ min: 0, default: CLIENT_NAMES.length }}
+      helpText="Add a logo per client if you have one - otherwise the name is shown as text."
+      default={CLIENT_NAMES.map((name) => ({ name }))}
+    >
+      <ImageField name="logo" label="Logo (optional)" />
+      <TextField name="name" label="Client name" default="" />
+    </RepeatedFieldGroup>
+    <BannerImageField name="footerImage" label="Footer photo" />
+    <ExtraContentBlocksField />
+  </ModuleFields>
+);
+
+export const meta = {
+  label: 'Prop- Clients Grid',
+  content_types: ['QUOTE', 'QUOTE_BLUEPRINT'],
+};
+
+export const hublDataTemplate = `
+  {% set hublData = {} %}
+`;
