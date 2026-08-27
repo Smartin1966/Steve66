@@ -63,7 +63,13 @@ export function Component({
         backgroundColor: COLORS.paper,
       }}
     >
-      <HeroPhotoBanner image={fieldValues.heroImage} logo={fieldValues.logo} title={fieldValues.title} height={520} />
+      <HeroPhotoBanner
+        image={fieldValues.heroImage}
+        logo={fieldValues.logo}
+        title={fieldValues.title}
+        height={520}
+        contentAlign="top"
+      />
 
       <div
         style={{

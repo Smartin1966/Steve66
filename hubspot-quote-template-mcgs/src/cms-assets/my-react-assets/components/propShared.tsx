@@ -129,11 +129,13 @@ export function HeroPhotoBanner({
   logo,
   title,
   height,
+  contentAlign = 'center',
 }: {
   image?: ImageValue;
   logo?: ImageValue;
   title?: string;
   height: number;
+  contentAlign?: 'center' | 'top';
 }) {
   return (
     <div
@@ -151,9 +153,12 @@ export function HeroPhotoBanner({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: contentAlign === 'top' ? 'flex-start' : 'center',
         textAlign: 'center',
-        padding: '0 calc(var(--spacing-unit) * 4)',
+        padding:
+          contentAlign === 'top'
+            ? 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 4) 0'
+            : '0 calc(var(--spacing-unit) * 4)',
       }}
     >
       {logo?.src ? (
