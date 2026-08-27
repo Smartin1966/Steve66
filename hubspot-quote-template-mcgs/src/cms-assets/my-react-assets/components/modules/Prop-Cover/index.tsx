@@ -67,7 +67,7 @@ export function Component({
         image={fieldValues.heroImage}
         logo={fieldValues.logo}
         title={fieldValues.title}
-        height={520}
+        height={680}
         contentAlign="top"
       />
 
@@ -81,6 +81,7 @@ export function Component({
           fontSize: 20,
           textTransform: 'uppercase',
           padding: 'calc(var(--spacing-unit) * 2)',
+          marginTop: 'auto',
         }}
       >
         {highlightIndex >= 0 ? (
