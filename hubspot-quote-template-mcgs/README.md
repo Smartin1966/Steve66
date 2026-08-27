@@ -101,6 +101,17 @@ no code required. Every module also has at least one **ImageField** (logo,
 hero banner, screenshots, case-study logos, or a decorative banner) so you
 can swap in your own pictures the same way.
 
+### Editable fonts on Prop-Cover
+
+`Prop- Cover Page`'s three headline text elements — Title, Tagline, and
+Purchasing company name — each have their own **font field** (Title font,
+Tagline font, Purchasing company name font) right below them in the
+sidebar. Click one to open HubSpot's font picker and change the family,
+size, weight, color, and casing for just that element, independent of the
+others and independent of the rest of the template. Defaults match the
+current design (Poppins, bold, uppercase) so nothing changes until you
+edit one.
+
 ### Adding more than the fixed fields: "Additional content blocks"
 
 Every module (and, inside `QuoteCaseStudiesModule`, every individual case

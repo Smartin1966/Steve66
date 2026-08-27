@@ -1,6 +1,15 @@
-import { ModuleFields, TextField } from '@hubspot/cms-components/fields';
+import { ModuleFields, TextField, FontField } from '@hubspot/cms-components/fields';
 import type { QuoteTemplateContext } from '@hubspot/quote-dev-sdk';
-import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, formatCrmDate, personalize } from '../../theme';
+import {
+  COLORS,
+  FONT_HEADING,
+  FONT_BODY,
+  A4_PAGE,
+  formatCrmDate,
+  personalize,
+  fontValueToStyle,
+  FontValue,
+} from '../../theme';
 import { LogoField, BannerImageField, HeroPhotoBanner } from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
@@ -8,9 +17,12 @@ interface FieldValues {
   logo?: { src?: string; alt?: string };
   heroImage?: { src?: string; alt?: string };
   title: string;
+  titleFont?: FontValue;
   tagline: string;
   taglineHighlight: string;
+  taglineFont?: FontValue;
   companyNameLabel: string;
+  companyNameFont?: FontValue;
   extraBlocks?: ExtraBlock[];
 }
 
@@ -52,6 +64,10 @@ export function Component({
   const highlight = fieldValues.taglineHighlight || '';
   const highlightIndex = highlight ? tagline.toLowerCase().indexOf(highlight.toLowerCase()) : -1;
 
+  const titleStyle = fontValueToStyle(fieldValues.titleFont, FONT_HEADING);
+  const taglineStyle = fontValueToStyle(fieldValues.taglineFont, FONT_HEADING);
+  const companyNameStyle = fontValueToStyle(fieldValues.companyNameFont, FONT_HEADING);
+
   return (
     <div
       style={{
@@ -71,18 +87,15 @@ export function Component({
         contentAlign="top"
         fillAvailable
         curvedBottom={false}
+        titleStyle={titleStyle}
       />
 
       <div
         style={{
           backgroundColor: COLORS.navy,
-          color: '#ffffff',
           textAlign: 'center',
-          fontFamily: FONT_HEADING,
-          fontWeight: 700,
-          fontSize: 20,
-          textTransform: 'uppercase',
           padding: 'calc(var(--spacing-unit) * 2)',
+          ...taglineStyle,
         }}
       >
         {highlightIndex >= 0 ? (
@@ -107,12 +120,8 @@ export function Component({
       >
         <div
           style={{
-            fontFamily: FONT_HEADING,
-            fontWeight: 700,
-            color: COLORS.navy,
-            fontSize: 22,
-            textTransform: 'uppercase',
             marginBottom: 'calc(var(--spacing-unit) * 3)',
+            ...companyNameStyle,
           }}
         >
           {companyNameLabel}
@@ -150,6 +159,21 @@ export const fields = (
     <LogoField />
     <BannerImageField name="heroImage" label="Hero photo" />
     <TextField name="title" label="Title" default="Solution Proposal" />
+    <FontField
+      name="titleFont"
+      label="Title font"
+      loadExternalFonts
+      default={{
+        font: 'Poppins',
+        font_set: 'GOOGLE',
+        fallback: FONT_HEADING,
+        size: 40,
+        size_unit: 'px',
+        color: '#ffffff',
+        styles: { bold: true },
+        casing: 'uppercase',
+      }}
+    />
     <TextField
       name="tagline"
       label="Tagline"
@@ -157,11 +181,41 @@ export const fields = (
       default="The Solution That Delivers"
     />
     <TextField name="taglineHighlight" label="Tagline highlighted word" default="Delivers" />
+    <FontField
+      name="taglineFont"
+      label="Tagline font"
+      loadExternalFonts
+      default={{
+        font: 'Poppins',
+        font_set: 'GOOGLE',
+        fallback: FONT_HEADING,
+        size: 20,
+        size_unit: 'px',
+        color: '#ffffff',
+        styles: { bold: true },
+        casing: 'uppercase',
+      }}
+    />
     <TextField
       name="companyNameLabel"
       label="Purchasing company name"
       helpText="Personalize with {{company}}, or type a name directly. Falls back to the quote's buyer company automatically."
       default="{{company}}"
+    />
+    <FontField
+      name="companyNameFont"
+      label="Purchasing company name font"
+      loadExternalFonts
+      default={{
+        font: 'Poppins',
+        font_set: 'GOOGLE',
+        fallback: FONT_HEADING,
+        size: 22,
+        size_unit: 'px',
+        color: COLORS.navy,
+        styles: { bold: true },
+        casing: 'uppercase',
+      }}
     />
     <ExtraContentBlocksField />
   </ModuleFields>

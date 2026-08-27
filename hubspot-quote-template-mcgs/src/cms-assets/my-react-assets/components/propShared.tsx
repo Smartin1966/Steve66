@@ -3,6 +3,7 @@
 // same navy/orange palette as the MCGS quote modules but adds its own
 // decorative motifs (a diagonal wedge banner, a hero-photo banner with a
 // curved edge, and a small corner wedge) repeated across most pages.
+import type { CSSProperties } from 'react';
 import { ImageField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING } from './theme';
 import { LogoImage, LogoValue as ImageValue } from './sharedFields';
@@ -132,6 +133,7 @@ export function HeroPhotoBanner({
   contentAlign = 'center',
   fillAvailable = false,
   curvedBottom = true,
+  titleStyle,
 }: {
   image?: ImageValue;
   logo?: ImageValue;
@@ -146,6 +148,9 @@ export function HeroPhotoBanner({
   // Set false to square off the bottom edge instead of the default
   // curved/eyebrow cut.
   curvedBottom?: boolean;
+  // Overrides the title's default font/size/color/etc (e.g. from a
+  // FontField), merged over the height-based default.
+  titleStyle?: CSSProperties;
 }) {
   return (
     <div
@@ -193,6 +198,7 @@ export function HeroPhotoBanner({
             fontSize: Math.min(40, height * 0.22),
             lineHeight: 1.05,
             textTransform: 'uppercase',
+            ...titleStyle,
           }}
         >
           {title}

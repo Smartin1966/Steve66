@@ -90,3 +90,53 @@ export const richTextPersonalizationFeatures = [
   'personalize',
   'image',
 ] as const;
+
+// The runtime value shape of a FontField (font family/size/weight/color
+// picker in the sidebar). Matches @hubspot/cms-components' FontFieldType
+// default shape.
+export interface FontValue {
+  font?: string;
+  font_set?: 'DEFAULT' | 'GOOGLE' | 'CUSTOM';
+  fallback?: string;
+  size?: number;
+  size_unit?: string;
+  color?: string;
+  styles?: { bold?: boolean; italic?: boolean; underline?: boolean };
+  line_height?: number;
+  letter_spacing?: number;
+  casing?: 'none' | 'uppercase';
+}
+
+// Converts a FontField value into inline styles, so a module can let an
+// editor pick font family/size (and weight/color/casing) for one text
+// element from the sidebar instead of it being hardcoded in code.
+export function fontValueToStyle(
+  value: FontValue | undefined,
+  fallbackFamily: string
+): {
+  fontFamily: string;
+  fontSize?: string;
+  color?: string;
+  fontWeight?: number;
+  fontStyle?: 'italic';
+  textDecoration?: 'underline';
+  lineHeight?: number;
+  letterSpacing?: number;
+  textTransform?: 'uppercase';
+} {
+  if (!value) return { fontFamily: fallbackFamily };
+  const family = value.font
+    ? `'${value.font}', ${value.fallback || fallbackFamily}`
+    : fallbackFamily;
+  return {
+    fontFamily: family,
+    ...(value.size ? { fontSize: `${value.size}${value.size_unit || 'px'}` } : null),
+    ...(value.color ? { color: value.color } : null),
+    ...(value.styles?.bold ? { fontWeight: 700 } : null),
+    ...(value.styles?.italic ? { fontStyle: 'italic' as const } : null),
+    ...(value.styles?.underline ? { textDecoration: 'underline' as const } : null),
+    ...(value.line_height ? { lineHeight: value.line_height } : null),
+    ...(value.letter_spacing ? { letterSpacing: value.letter_spacing } : null),
+    ...(value.casing === 'uppercase' ? { textTransform: 'uppercase' as const } : null),
+  };
+}
