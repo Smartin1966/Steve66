@@ -44,7 +44,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
             flex: 1,
             backgroundColor: COLORS.panel,
             backgroundImage: study.photo?.src
-              ? `linear-gradient(180deg, rgba(24,44,66,0) 55%, rgba(24,44,66,0.75)), url(${study.photo.src})`
+              ? `url(${study.photo.src})`
               : `linear-gradient(135deg, ${COLORS.navy} 0%, #23374f 60%, ${COLORS.orange} 150%)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -63,6 +63,7 @@ function CaseStudyRow({ study }: { study: CaseStudy }) {
                 fontWeight: 600,
                 fontSize: 12.5,
                 textAlign: 'center',
+                textShadow: study.photo?.src ? '0 1px 4px rgba(0,0,0,0.7)' : undefined,
               }}
             >
               &ldquo;{study.quoteText}&rdquo;

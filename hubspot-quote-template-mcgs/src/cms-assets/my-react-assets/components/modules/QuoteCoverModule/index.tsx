@@ -91,7 +91,7 @@ export function Component({ fieldValues, hublData }: Props) {
           minHeight: 260,
           backgroundColor: COLORS.navy,
           backgroundImage: fieldValues.heroImage?.src
-            ? `linear-gradient(180deg, rgba(24,44,66,0.15), rgba(24,44,66,0.65)), url(${fieldValues.heroImage.src})`
+            ? `url(${fieldValues.heroImage.src})`
             : `linear-gradient(135deg, ${COLORS.navy} 0%, #23374f 60%, ${COLORS.orange} 140%)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',

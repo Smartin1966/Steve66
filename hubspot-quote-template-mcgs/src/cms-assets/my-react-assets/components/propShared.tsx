@@ -164,7 +164,7 @@ export function HeroPhotoBanner({
         ...(fillAvailable ? { flex: '1 1 auto' } : { height }),
         backgroundColor: COLORS.navy,
         backgroundImage: image?.src
-          ? `linear-gradient(180deg, rgba(24,44,66,0.35), rgba(24,44,66,0.55)), url(${image.src})`
+          ? `url(${image.src})`
           : `linear-gradient(135deg, ${COLORS.navy} 0%, #23374f 55%, ${COLORS.orange} 150%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -176,6 +176,7 @@ export function HeroPhotoBanner({
         alignItems: 'center',
         justifyContent: contentAlign === 'top' ? 'flex-start' : 'center',
         textAlign: 'center',
+        textShadow: image?.src ? '0 1px 4px rgba(0,0,0,0.55)' : undefined,
         padding:
           contentAlign === 'top'
             ? 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 4) 0'
@@ -239,7 +240,7 @@ export function PhotoFooterBanner({ image, label }: { image?: ImageValue; label?
         marginTop: 'auto',
         backgroundColor: COLORS.navy,
         backgroundImage: image?.src
-          ? `linear-gradient(180deg, rgba(24,44,66,0.45), rgba(24,44,66,0.7)), url(${image.src})`
+          ? `url(${image.src})`
           : `linear-gradient(135deg, ${COLORS.navy} 0%, #23374f 60%, ${COLORS.orange} 150%)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -257,6 +258,7 @@ export function PhotoFooterBanner({ image, label }: { image?: ImageValue; label?
           fontSize: 30,
           textTransform: 'uppercase',
           letterSpacing: 1,
+          textShadow: image?.src ? '0 1px 4px rgba(0,0,0,0.55)' : undefined,
         }}
       >
         {label || 'Solution Proposal'}
