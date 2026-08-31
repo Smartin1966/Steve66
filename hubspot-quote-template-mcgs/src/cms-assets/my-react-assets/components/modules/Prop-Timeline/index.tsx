@@ -8,6 +8,7 @@ import { RichTextFieldWrapper } from '@hubspot/cms-components';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, richTextPersonalizationFeatures } from '../../theme';
 import {
   LogoField,
+  LogoFallbackTextField,
   BannerImageField,
   FooterBannerImageField,
   HeroPhotoBanner,
@@ -22,6 +23,7 @@ interface TimelineRow {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   heroImage?: { src?: string; alt?: string };
   footerBannerImage?: { src?: string; alt?: string };
   title: string;
@@ -46,7 +48,13 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         backgroundColor: COLORS.paper,
       }}
     >
-      <HeroPhotoBanner image={fieldValues.heroImage} logo={fieldValues.logo} title={fieldValues.title} height={180} />
+      <HeroPhotoBanner
+        image={fieldValues.heroImage}
+        logo={fieldValues.logo}
+        logoFallbackText={fieldValues.logoFallbackText}
+        title={fieldValues.title}
+        height={180}
+      />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.6 }}>
         <h2
@@ -116,6 +124,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <LogoFallbackTextField />
     <BannerImageField name="heroImage" label="Header photo" />
     <TextField name="title" label="Header title" default="Solution Proposal" />
     <TextField name="heading" label="Heading" default="Timeline" />

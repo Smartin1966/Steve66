@@ -7,7 +7,7 @@ import {
 } from '@hubspot/cms-components/fields';
 import { RichTextFieldWrapper } from '@hubspot/cms-components';
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE, richTextPersonalizationFeatures, splitLines } from '../../theme';
-import { LogoField, HeaderBannerImageField, WedgeTopBanner } from '../../propShared';
+import { LogoField, LogoFallbackTextField, HeaderBannerImageField, WedgeTopBanner } from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface CaseStudy {
@@ -26,6 +26,7 @@ interface CaseStudy {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   headerBannerImage?: { src?: string; alt?: string };
   heading: string;
   caseStudies: CaseStudy[];
@@ -161,7 +162,11 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
             breakBefore: chunkIndex === 0 ? 'auto' : 'page',
           }}
         >
-          <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
+          <WedgeTopBanner
+            logo={fieldValues.logo}
+            bannerImage={fieldValues.headerBannerImage}
+            logoFallbackText={fieldValues.logoFallbackText}
+          />
           <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.5 }}>
             <h2
               style={{
@@ -187,6 +192,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <LogoFallbackTextField />
     <HeaderBannerImageField />
     <TextField name="heading" label="Section heading" default="Customer Case Studies" />
     <RepeatedFieldGroup

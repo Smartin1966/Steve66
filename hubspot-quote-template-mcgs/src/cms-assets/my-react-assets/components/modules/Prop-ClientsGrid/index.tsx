@@ -2,6 +2,7 @@ import { ModuleFields, TextField, RepeatedFieldGroup, ImageField } from '@hubspo
 import { COLORS, FONT_HEADING, FONT_BODY, A4_PAGE } from '../../theme';
 import {
   LogoField,
+  LogoFallbackTextField,
   BannerImageField,
   HeaderBannerImageField,
   WedgeTopBanner,
@@ -16,6 +17,7 @@ interface ClientEntry {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   headerBannerImage?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
   footerLabel: string;
@@ -51,7 +53,11 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
         backgroundColor: COLORS.paper,
       }}
     >
-      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
+      <WedgeTopBanner
+        logo={fieldValues.logo}
+        bannerImage={fieldValues.headerBannerImage}
+        logoFallbackText={fieldValues.logoFallbackText}
+      />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)' }}>
         <h2
@@ -96,6 +102,7 @@ export function Component({ fieldValues }: { fieldValues: FieldValues }) {
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <LogoFallbackTextField />
     <HeaderBannerImageField />
     <TextField name="heading" label="Heading" default="Who We've Worked With" />
     <RepeatedFieldGroup

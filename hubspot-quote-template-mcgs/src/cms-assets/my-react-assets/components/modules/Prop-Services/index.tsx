@@ -15,6 +15,7 @@ import {
 } from '../../theme';
 import {
   LogoField,
+  LogoFallbackTextField,
   BannerImageField,
   HeaderBannerImageField,
   WedgeTopBanner,
@@ -29,6 +30,7 @@ interface ServiceItem {
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   headerBannerImage?: { src?: string; alt?: string };
   footerImage?: { src?: string; alt?: string };
   footerLabel: string;
@@ -67,7 +69,11 @@ export function Component({
         backgroundColor: COLORS.paper,
       }}
     >
-      <WedgeTopBanner logo={fieldValues.logo} bannerImage={fieldValues.headerBannerImage} />
+      <WedgeTopBanner
+        logo={fieldValues.logo}
+        bannerImage={fieldValues.headerBannerImage}
+        logoFallbackText={fieldValues.logoFallbackText}
+      />
 
       <div style={{ padding: 'calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 5)', lineHeight: 1.6 }}>
         <h2
@@ -116,6 +122,7 @@ export function Component({
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <LogoFallbackTextField />
     <HeaderBannerImageField />
     <TextField name="title" label="Title" default="Our Services" />
     <TextField

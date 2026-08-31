@@ -10,11 +10,12 @@ import {
   fontValueToStyle,
   FontValue,
 } from '../../theme';
-import { LogoField, BannerImageField, HeroPhotoBanner } from '../../propShared';
+import { LogoField, LogoFallbackTextField, BannerImageField, HeroPhotoBanner } from '../../propShared';
 import { ExtraBlock, ExtraBlocks, ExtraContentBlocksField } from '../../sharedFields';
 
 interface FieldValues {
   logo?: { src?: string; alt?: string };
+  logoFallbackText?: string;
   heroImage?: { src?: string; alt?: string };
   title: string;
   titleFont?: FontValue;
@@ -82,6 +83,7 @@ export function Component({
       <HeroPhotoBanner
         image={fieldValues.heroImage}
         logo={fieldValues.logo}
+        logoFallbackText={fieldValues.logoFallbackText}
         title={fieldValues.title}
         height={680}
         contentAlign="top"
@@ -157,6 +159,7 @@ export function Component({
 export const fields = (
   <ModuleFields>
     <LogoField />
+    <LogoFallbackTextField />
     <BannerImageField name="heroImage" label="Hero photo" />
     <TextField name="title" label="Title" default="Solution Proposal" />
     <FontField

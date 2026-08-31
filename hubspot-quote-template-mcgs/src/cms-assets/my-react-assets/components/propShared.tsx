@@ -4,7 +4,7 @@
 // decorative motifs (a diagonal wedge banner, a hero-photo banner with a
 // curved edge, and a small corner wedge) repeated across most pages.
 import type { CSSProperties } from 'react';
-import { ImageField } from '@hubspot/cms-components/fields';
+import { ImageField, TextField } from '@hubspot/cms-components/fields';
 import { COLORS, FONT_HEADING } from './theme';
 import { LogoImage, LogoValue as ImageValue } from './sharedFields';
 
@@ -13,7 +13,7 @@ export function LogoField({ name = 'logo' }: { name?: string } = {}) {
     <ImageField
       name={name}
       label="Logo"
-      helpText="Upload your logo to the HubSpot file manager first, then select it here. If left blank, a styled text wordmark is used instead."
+      helpText="Upload your logo to the HubSpot file manager first, then select it here. If left blank, the fallback text below is shown instead."
       default={{ src: '', alt: '' }}
     />
   );
@@ -58,7 +58,21 @@ export function FooterBannerImageField({ name = 'footerBannerImage' }: { name?: 
   );
 }
 
-function Wordmark({ light }: { light?: boolean }) {
+// Text shown in place of a logo image when none is selected. Pairs with
+// LogoFallbackTextField below - clearing that field's text entirely hides
+// this altogether instead of falling back to any hardcoded wordmark.
+export function LogoFallbackTextField({ name = 'logoFallbackText' }: { name?: string } = {}) {
+  return (
+    <TextField
+      name={name}
+      label="Logo fallback text"
+      helpText="Shown in place of the logo image if no logo is uploaded above. Clear this text completely to show nothing instead."
+      default="MCGLOBAL SOLUTIONS"
+    />
+  );
+}
+
+function FallbackText({ text, light }: { text: string; light?: boolean }) {
   return (
     <span
       style={{
@@ -70,8 +84,7 @@ function Wordmark({ light }: { light?: boolean }) {
         whiteSpace: 'nowrap',
       }}
     >
-      <span style={{ color: light ? '#ffffff' : COLORS.orange }}>MC</span>
-      GLOBAL SOLUTIONS
+      {text}
     </span>
   );
 }
@@ -84,9 +97,13 @@ function Wordmark({ light }: { light?: boolean }) {
 export function WedgeTopBanner({
   logo,
   bannerImage,
+  logoFallbackText,
 }: {
   logo?: ImageValue;
   bannerImage?: ImageValue;
+  // Text shown in place of the branded wordmark when no logo image is
+  // set. Leave unset/empty to show nothing at all.
+  logoFallbackText?: string;
 }) {
   if (bannerImage?.src) {
     return (
@@ -125,9 +142,9 @@ export function WedgeTopBanner({
       <div style={{ position: 'relative' }}>
         {logo?.src ? (
           <LogoImage image={logo} fallbackHeight={26} alt="Company logo" />
-        ) : (
-          <Wordmark />
-        )}
+        ) : logoFallbackText ? (
+          <FallbackText text={logoFallbackText} />
+        ) : null}
       </div>
     </div>
   );
@@ -246,26 +263,11 @@ export function HeroPhotoBanner({
           alt="Company logo"
           style={{ marginBottom: 10 }}
         />
-      ) : (
+      ) : logoFallbackText ? (
         <div style={{ marginBottom: 10 }}>
-          {logoFallbackText ? (
-            <span
-              style={{
-                fontFamily: FONT_HEADING,
-                fontWeight: 700,
-                fontSize: 18,
-                letterSpacing: 0.5,
-                color: '#ffffff',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {logoFallbackText}
-            </span>
-          ) : (
-            <Wordmark light />
-          )}
+          <FallbackText text={logoFallbackText} light />
         </div>
-      )}
+      ) : null}
       {title ? (
         <div
           style={{
