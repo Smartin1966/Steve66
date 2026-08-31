@@ -30,10 +30,19 @@ export type LogoValue =
     }
   | undefined;
 
-// Renders a logo/signature image respecting the width/height set in
-// HubSpot's image field editor (crop/resize panel) instead of forcing a
-// fixed pixel height that ignores it. Falls back to a sensible height,
-// scaled proportionally, only when the field carries no explicit size yet.
+// Renders a logo/signature image respecting a deliberate resize made via
+// HubSpot's image field resize/crop panel, while still fitting it into its
+// design slot. HubSpot stores the *uploaded file's native pixel size* as
+// width/height the moment an image is selected, before anyone has touched
+// the resize handles - rendering that literally (as earlier versions of
+// this component did) makes any freshly-uploaded logo balloon to its full
+// source resolution. So width/height are only ever used to derive the
+// image's aspect ratio; the rendered height is capped at whichever is
+// smaller of the field's own height and a generous multiple of
+// fallbackHeight, and the width is derived from that height to keep
+// proportions correct. A deliberate resize down to something at or below
+// the cap is honored exactly; an untouched native-resolution upload is
+// scaled down to fit instead of overflowing its slot.
 export function LogoImage({
   image,
   fallbackHeight,
@@ -47,6 +56,13 @@ export function LogoImage({
 }) {
   if (!image?.src) return null;
   const hasExplicitSize = Boolean(image.width && image.height);
+  let renderWidth: number | string = 'auto';
+  let renderHeight: number | string = fallbackHeight;
+  if (hasExplicitSize) {
+    const aspectRatio = image.width! / image.height!;
+    renderHeight = Math.min(image.height!, fallbackHeight * 2);
+    renderWidth = renderHeight * aspectRatio;
+  }
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
@@ -54,15 +70,9 @@ export function LogoImage({
       alt={image.alt || alt}
       style={{
         display: 'block',
-        // When the field has an explicit width+height (set via HubSpot's
-        // image field resize/crop panel), trust it completely - no extra
-        // max-width/max-height caps, which would clamp one dimension
-        // without the other and distort the image's proportions. Only
-        // fall back to a proportional default height when no explicit
-        // size has been set yet.
-        ...(hasExplicitSize
-          ? { width: image.width, height: image.height }
-          : { height: fallbackHeight, width: 'auto', maxWidth: '100%' }),
+        width: renderWidth,
+        height: renderHeight,
+        maxWidth: '100%',
         ...style,
       }}
     />
