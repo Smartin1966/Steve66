@@ -160,7 +160,7 @@ export const fields = (
       ].join('\n')}
     />
     <RepeatedFieldGroup name="images" label="Screenshots" occurrence={{ min: 0, max: 12 }}>
-      <ImageField name="image" label="Image" />
+      <ImageField name="image" label="Image" default={{ src: '', alt: '' }} />
       <TextField name="caption" label="Caption" default="" />
     </RepeatedFieldGroup>
     <ExtraContentBlocksField />

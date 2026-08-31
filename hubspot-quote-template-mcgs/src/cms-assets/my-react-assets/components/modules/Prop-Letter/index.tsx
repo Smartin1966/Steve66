@@ -152,7 +152,12 @@ export const fields = (
 <p>The result is a complete, tailored solution built for how your team actually operates, today and as you grow.</p>`}
       enabledFeatures={[...richTextPersonalizationFeatures]}
     />
-    <ImageField name="signatureImage" label="Signature image" helpText="Optional. A scanned or drawn signature graphic." />
+    <ImageField
+      name="signatureImage"
+      label="Signature image"
+      helpText="Optional. A scanned or drawn signature graphic."
+      default={{ src: '', alt: '' }}
+    />
     <TextField name="senderEmail" label="Sender email (fallback)" helpText="Used only if the quote has no sender email set." default="smartin@mcgsol.com.au" />
     <FooterBannerImageField />
     <ExtraContentBlocksField />

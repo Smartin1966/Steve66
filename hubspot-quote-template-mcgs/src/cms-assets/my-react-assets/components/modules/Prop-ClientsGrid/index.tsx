@@ -105,7 +105,7 @@ export const fields = (
       helpText="Add a logo per client if you have one - otherwise the name is shown as text."
       default={CLIENT_NAMES.map((name) => ({ clientName: name }))}
     >
-      <ImageField name="logo" label="Logo (optional)" />
+      <ImageField name="logo" label="Logo (optional)" default={{ src: '', alt: '' }} />
       <TextField name="clientName" label="Client name" default="" />
     </RepeatedFieldGroup>
     <BannerImageField name="footerImage" label="Footer photo" />

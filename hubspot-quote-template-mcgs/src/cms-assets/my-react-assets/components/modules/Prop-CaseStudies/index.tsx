@@ -267,7 +267,7 @@ export const fields = (
         },
       ]}
     >
-      <ImageField name="photo" label="Photo" />
+      <ImageField name="photo" label="Photo" default={{ src: '', alt: '' }} />
       <TextField name="quoteText" label="Quote overlaid on photo (optional)" default="" allowNewLine />
       <TextField name="companyName" label="Company name" default="" />
       <TextField name="industry" label="Industry" default="" />

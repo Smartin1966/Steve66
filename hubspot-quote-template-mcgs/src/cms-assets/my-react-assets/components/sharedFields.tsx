@@ -83,7 +83,7 @@ export function ExtraContentBlocksField({
       occurrence={{ min: 0, max: 12 }}
       helpText="Add as many extra text and/or image blocks as this section needs. Each block is optional in every part - leave the image, heading, or text blank to skip it. Blocks render in order, after the section's main content."
     >
-      <ImageField name="image" label="Image" />
+      <ImageField name="image" label="Image" default={{ src: '', alt: '' }} />
       <TextField name="caption" label="Image caption" default="" />
       <TextField name="heading" label="Heading" default="" />
       <RichTextField

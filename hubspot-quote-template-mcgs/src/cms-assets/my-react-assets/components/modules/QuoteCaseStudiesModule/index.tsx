@@ -248,7 +248,7 @@ export const fields = (
         },
       ]}
     >
-      <ImageField name="logo" label="Client logo" />
+      <ImageField name="logo" label="Client logo" default={{ src: '', alt: '' }} />
       <TextField name="companyName" label="Company name" default="" />
       <RichTextField
         name="intro"

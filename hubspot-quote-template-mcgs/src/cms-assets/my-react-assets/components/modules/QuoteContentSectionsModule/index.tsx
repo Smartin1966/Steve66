@@ -147,6 +147,7 @@ export const fields = (
       name="bannerImage"
       label="Banner image"
       helpText="Optional decorative image shown below the sections."
+      default={{ src: '', alt: '' }}
     />
     <RepeatedFieldGroup
       name="items"

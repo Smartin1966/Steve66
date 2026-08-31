@@ -155,6 +155,7 @@ export const fields = (
       name="bannerImage"
       label="Banner image"
       helpText="Optional decorative image shown at the top of this page."
+      default={{ src: '', alt: '' }}
     />
     <RichTextField
       name="intro"

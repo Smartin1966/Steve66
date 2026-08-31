@@ -193,11 +193,17 @@ export function Component({ fieldValues, hublData }: Props) {
 
 export const fields = (
   <ModuleFields>
-    <ImageField name="logo" label="Company logo" helpText="Upload your logo to the HubSpot file manager first, then select it here." />
+    <ImageField
+      name="logo"
+      label="Company logo"
+      helpText="Upload your logo to the HubSpot file manager first, then select it here."
+      default={{ src: '', alt: '' }}
+    />
     <ImageField
       name="heroImage"
       label="Hero / banner image"
       helpText="Optional. If left blank a navy-to-orange gradient is used instead."
+      default={{ src: '', alt: '' }}
     />
     <TextField
       name="eyebrow"

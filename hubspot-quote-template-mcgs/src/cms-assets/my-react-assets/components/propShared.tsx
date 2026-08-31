@@ -14,6 +14,7 @@ export function LogoField({ name = 'logo' }: { name?: string } = {}) {
       name={name}
       label="Logo"
       helpText="Upload your logo to the HubSpot file manager first, then select it here. If left blank, a styled text wordmark is used instead."
+      default={{ src: '', alt: '' }}
     />
   );
 }
@@ -30,6 +31,7 @@ export function BannerImageField({
       name={name}
       label={label}
       helpText="Optional. If left blank a navy-to-orange gradient is used instead."
+      default={{ src: '', alt: '' }}
     />
   );
 }
@@ -40,6 +42,7 @@ export function HeaderBannerImageField({ name = 'headerBannerImage' }: { name?: 
       name={name}
       label="Header banner image"
       helpText="Optional. Upload your own graphic to replace the whole header banner (wedge shapes + logo). Leave blank to use the built-in navy/orange wedge design below."
+      default={{ src: '', alt: '' }}
     />
   );
 }
@@ -50,6 +53,7 @@ export function FooterBannerImageField({ name = 'footerBannerImage' }: { name?: 
       name={name}
       label="Footer banner image"
       helpText="Optional. Upload your own graphic to replace the small decorative corner wedge. Leave blank to use the built-in design."
+      default={{ src: '', alt: '' }}
     />
   );
 }

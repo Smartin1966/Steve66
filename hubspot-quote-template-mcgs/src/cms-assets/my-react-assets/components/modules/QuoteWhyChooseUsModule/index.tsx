@@ -151,6 +151,7 @@ export const fields = (
       name="bannerImage"
       label="Banner image"
       helpText="Optional decorative image shown below the intro text."
+      default={{ src: '', alt: '' }}
     />
     <TextField
       name="clientsHeading"

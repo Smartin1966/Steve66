@@ -156,6 +156,7 @@ export const fields = (
       name="signatureImage"
       label="Signature image"
       helpText="Optional. A scanned or drawn signature graphic."
+      default={{ src: '', alt: '' }}
     />
     <TextField
       name="senderJobTitle"
