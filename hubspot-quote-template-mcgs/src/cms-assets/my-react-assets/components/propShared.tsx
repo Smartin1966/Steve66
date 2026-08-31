@@ -230,11 +230,22 @@ export function HeroPhotoBanner({
   // name instead of the hardcoded "MCGLOBAL SOLUTIONS" wordmark).
   logoFallbackText?: string;
 }) {
+  // The photo renders as a CSS cover background, not a plain <img>, so
+  // there's no HTML element for the image field's own width/height to
+  // apply to - previously they were ignored entirely and resizing the
+  // field did nothing. Now a deliberate resize (the field's stored
+  // height, smaller than the design default) shrinks the banner to
+  // match; an untouched upload - which HubSpot fills with the source
+  // file's native pixel height by default - is capped at 2x the design
+  // height instead of blowing the layout out. Doesn't apply when
+  // fillAvailable is set (Cover), which is sized by its flex layout.
+  const effectiveHeight =
+    !fillAvailable && image?.height ? Math.min(image.height, height * 2) : height;
   return (
     <div
       style={{
         position: 'relative',
-        ...(fillAvailable ? { flex: '1 1 auto' } : { height }),
+        ...(fillAvailable ? { flex: '1 1 auto' } : { height: effectiveHeight }),
         backgroundColor: COLORS.navy,
         backgroundImage: image?.src
           ? `url(${image.src})`
@@ -259,7 +270,7 @@ export function HeroPhotoBanner({
       {logo?.src ? (
         <LogoImage
           image={logo}
-          fallbackHeight={Math.min(40, height * 0.22)}
+          fallbackHeight={Math.min(40, effectiveHeight * 0.22)}
           alt="Company logo"
           style={{ marginBottom: 10 }}
         />
@@ -274,7 +285,7 @@ export function HeroPhotoBanner({
             fontFamily: FONT_HEADING,
             fontWeight: 800,
             color: '#ffffff',
-            fontSize: Math.min(40, height * 0.22),
+            fontSize: Math.min(40, effectiveHeight * 0.22),
             lineHeight: 1.05,
             textTransform: 'uppercase',
             ...titleStyle,
@@ -289,12 +300,20 @@ export function HeroPhotoBanner({
 
 // Decorative footer photo strip with "SOLUTION PROPOSAL" watermark text,
 // used at the bottom of Services / Why Choose Us / Clients grid pages.
+const PHOTO_FOOTER_BANNER_HEIGHT = 90;
+
 export function PhotoFooterBanner({ image, label }: { image?: ImageValue; label?: string }) {
+  // Same cover-background sizing as HeroPhotoBanner above: a deliberate
+  // resize (a stored height smaller than the design default) is honored,
+  // an untouched native-resolution upload is capped at 2x the default.
+  const effectiveHeight = image?.height
+    ? Math.min(image.height, PHOTO_FOOTER_BANNER_HEIGHT * 2)
+    : PHOTO_FOOTER_BANNER_HEIGHT;
   return (
     <div
       style={{
         position: 'relative',
-        height: 90,
+        height: effectiveHeight,
         marginTop: 'auto',
         backgroundColor: COLORS.navy,
         backgroundImage: image?.src
