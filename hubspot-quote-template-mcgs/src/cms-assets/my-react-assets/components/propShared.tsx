@@ -327,19 +327,21 @@ export function PhotoFooterBanner({ image, label }: { image?: ImageValue; label?
         overflow: 'hidden',
       }}
     >
-      <div
-        style={{
-          fontFamily: FONT_HEADING,
-          fontWeight: 800,
-          color: 'rgba(255,255,255,0.9)',
-          fontSize: 30,
-          textTransform: 'uppercase',
-          letterSpacing: 1,
-          textShadow: image?.src ? '0 1px 4px rgba(0,0,0,0.55)' : undefined,
-        }}
-      >
-        {label || 'Solution Proposal'}
-      </div>
+      {label ? (
+        <div
+          style={{
+            fontFamily: FONT_HEADING,
+            fontWeight: 800,
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: 30,
+            textTransform: 'uppercase',
+            letterSpacing: 1,
+            textShadow: image?.src ? '0 1px 4px rgba(0,0,0,0.55)' : undefined,
+          }}
+        >
+          {label}
+        </div>
+      ) : null}
     </div>
   );
 }
