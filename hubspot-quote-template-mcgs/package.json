@@ -1,0 +1,13 @@
+{
+  "name": "mcgs-revenue-hub-quotes",
+  "description": "Custom-coded React quote modules that recreate the MCGlobal Solutions proposal design for HubSpot Revenue Hub quote templates",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd src/cms-assets/my-react-assets && npm install",
+    "start": "cd src/cms-assets/my-react-assets && npm start",
+    "deploy": "hs project upload"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
